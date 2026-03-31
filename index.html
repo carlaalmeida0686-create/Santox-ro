@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Santo Xêro — Carrossel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=IM+Fell+DW+Pica:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --terra: #3B2A1A;
+    --argila: #7A5C3E;
+    --areia: #C8A97A;
+    --creme: #F0E6D0;
+    --folha: #4A5E3A;
+    --ouro: #C49A3A;
+    --fumo: #2A1F14;
+    --branco-erva: #FAF5EB;
+  }
+
+  body {
+    background: var(--fumo);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Cormorant Garamond', serif;
+    padding: 20px;
+    gap: 24px;
+  }
+
+  /* ───── WRAPPER DO CARROSSEL ───── */
+  .carousel-wrapper {
+    position: relative;
+    width: 420px;
+    max-width: 100%;
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 0.65s cubic-bezier(0.77, 0, 0.175, 1);
+    will-change: transform;
+  }
+
+  /* ───── SLIDE BASE ───── */
+  .slide {
+    min-width: 420px;
+    max-width: 420px;
+    height: 520px;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 40px;
+    flex-shrink: 0;
+  }
+
+  /* textura de grão sobre todos */
+  .slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    border-radius: 4px;
+  }
+
+  /* número do slide */
+  .slide-num {
+    position: absolute;
+    top: 22px;
+    right: 28px;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    opacity: 0.45;
+  }
+
+  /* linha decorativa */
+  .rule {
+    width: 48px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.4;
+    margin: 18px auto;
+  }
+
+  .rule.tall { height: 40px; width: 1px; }
+
+  /* ────────────────────────────────
+     SLIDE 1 — CAPA
+  ──────────────────────────────── */
+  .slide-1 {
+    background: var(--terra);
+    color: var(--creme);
+    justify-content: space-between;
+  }
+
+  .slide-1 .top-ornament {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding-top: 8px;
+  }
+
+  .slide-1 .brand {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.35em;
+    color: var(--areia);
+    text-transform: uppercase;
+  }
+
+  .slide-1 .titulo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 62px;
+    font-weight: 300;
+    line-height: 0.9;
+    text-align: center;
+    color: var(--creme);
+    letter-spacing: -0.01em;
+    margin-top: 10px;
+  }
+
+  .slide-1 .titulo em {
+    font-style: italic;
+    color: var(--areia);
+  }
+
+  .slide-1 .selo {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,169,122,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 14px;
+    gap: 4px;
+  }
+
+  .slide-1 .selo svg { opacity: 0.7; }
+
+  .slide-1 .sub {
+    font-family: 'IM Fell DW Pica', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--areia);
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  .slide-1 .bottom-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 9.5px;
+    letter-spacing: 0.3em;
+    color: var(--argila);
+    padding-bottom: 4px;
+  }
+
+  /* ────────────────────────────────
+     SLIDE 2 — O QUE É
+  ──────────────────────────────── */
+  .slide-2 {
+    background: var(--creme);
+    color: var(--terra);
+  }
+
+  .slide-2 .eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 9.5px;
+    letter-spacing: 0.4em;
+    color: var(--argila);
+    text-align: center;
+  }
+
+  .slide-2 .heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 300;
+    line-height: 1.1;
+    text-align: center;
+    color: var(--terra);
+  }
+
+  .slide-2 .heading em {
+    font-style: italic;
+    color: var(--argila);
+  }
+
+  .slide-2 .body {
+    font-size: 17px;
+    line-height: 1.75;
+    text-align: center;
+    color: #5a3f28;
+    max-width: 300px;
+  }
+
+  .slide-2 .ornament-leaf {
+    font-size: 28px;
+    opacity: 0.5;
+    display: block;
+    text-align: center;
+  }
+
+  /* ────────────────────────────────
+     SLIDE 3 — ÓLEOS ANCESTRAIS
+  ──────────────────────────────── */
+  .slide-3 {
+    background: #2C3A25;
+    color: var(--branco-erva);
+  }
+
+  .slide-3 .big-word {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 76px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 0.85;
+    text-align: center;
+    color: rgba(240,230,208,0.15);
+    position: absolute;
+    bottom: 60px;
+    left: 0; right: 0;
+    letter-spacing: -0.02em;
+    pointer-events: none;
+  }
+
+  .slide-3 .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .slide-3 .eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.45em;
+    color: var(--areia);
+  }
+
+  .slide-3 .heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    text-align: center;
+    line-height: 1.15;
+  }
+
+  .slide-3 .heading strong {
+    font-weight: 600;
+    color: var(--areia);
+  }
+
+  .slide-3 .items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .slide-3 .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 15.5px;
+    line-height: 1.5;
+    color: rgba(240,230,208,0.88);
+  }
+
+  .slide-3 .item-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--ouro);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+
+  /* ────────────────────────────────
+     SLIDE 4 — BANHOS DE ERVAS
+  ──────────────────────────────── */
+  .slide-4 {
+    background: var(--fumo);
+    color: var(--creme);
+    overflow: hidden;
+  }
+
+  .slide-4 .circle-bg {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,169,122,0.12);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .slide-4 .circle-bg-2 {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,169,122,0.08);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .slide-4 .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .slide-4 .eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.45em;
+    color: var(--areia);
+    opacity: 0.7;
+  }
+
+  .slide-4 .number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 100px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 0.8;
+    color: rgba(200,169,122,0.15);
+    position: absolute;
+    top: 80px;
+    right: 28px;
+  }
+
+  .slide-4 .heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    line-height: 1.1;
+  }
+
+  .slide-4 .heading em {
+    font-style: italic;
+    color: var(--areia);
+  }
+
+  .slide-4 .body {
+    font-size: 16.5px;
+    line-height: 1.7;
+    max-width: 290px;
+    opacity: 0.85;
+  }
+
+  .slide-4 .tag-pill {
+    background: rgba(200,169,122,0.12);
+    border: 1px solid rgba(200,169,122,0.25);
+    color: var(--areia);
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    padding: 6px 18px;
+    border-radius: 40px;
+    text-transform: uppercase;
+  }
+
+  /* ────────────────────────────────
+     SLIDE 5 — NÃO É COSMÉTICO VERDE
+  ──────────────────────────────── */
+  .slide-5 {
+    background: var(--areia);
+    color: var(--fumo);
+  }
+
+  .slide-5 .big-no {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 0.85;
+    color: rgba(42,31,20,0.08);
+    position: absolute;
+    top: 30px;
+    left: -10px;
+    pointer-events: none;
+  }
+
+  .slide-5 .content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    align-items: center;
+  }
+
+  .slide-5 .eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.45em;
+    color: var(--terra);
+    opacity: 0.6;
+  }
+
+  .slide-5 .heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--terra);
+  }
+
+  .slide-5 .heading em { font-style: italic; }
+
+  .slide-5 .divider {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    max-width: 300px;
+  }
+  .slide-5 .divider::before,
+  .slide-5 .divider::after {
+    content: '';
+    height: 1px;
+    background: rgba(59,42,26,0.3);
+  }
+  .slide-5 .divider span {
+    font-family: 'Cinzel', serif;
+    font-size: 8.5px;
+    letter-spacing: 0.25em;
+    color: var(--terra);
+    opacity: 0.5;
+  }
+
+  .slide-5 .afirmacao {
+    font-family: 'IM Fell DW Pica', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.5;
+    text-align: center;
+    max-width: 280px;
+    color: var(--terra);
+  }
+
+  /* ────────────────────────────────
+     SLIDE 6 — RAIZ E VERDADE
+  ──────────────────────────────── */
+  .slide-6 {
+    background: var(--terra);
+    color: var(--creme);
+    justify-content: space-between;
+  }
+
+  .slide-6 .top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding-top: 8px;
+  }
+
+  .slide-6 .eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.45em;
+    color: var(--areia);
+    opacity: 0.7;
+  }
+
+  .slide-6 .mid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .slide-6 .manifesto {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px;
+    font-weight: 300;
+    line-height: 1.7;
+    text-align: center;
+    max-width: 300px;
+    color: var(--creme);
+  }
+
+  .slide-6 .manifesto strong {
+    color: var(--areia);
+    font-weight: 400;
+  }
+
+  .slide-6 .bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 4px;
+  }
+
+  .slide-6 .brand-final {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    letter-spacing: 0.3em;
+    color: var(--areia);
+  }
+
+  .slide-6 .tagline-final {
+    font-family: 'IM Fell DW Pica', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(200,169,122,0.6);
+    letter-spacing: 0.08em;
+  }
+
+  /* ────────────────────────────────
+     CONTROLES
+  ──────────────────────────────── */
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,169,122,0.3);
+    background: transparent;
+    color: var(--areia);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .btn:hover {
+    background: rgba(200,169,122,0.1);
+    border-color: rgba(200,169,122,0.6);
+  }
+
+  .dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(200,169,122,0.25);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .dot.active {
+    background: var(--areia);
+    transform: scale(1.3);
+  }
+
+  /* ────────────────────────────────
+     DOWNLOAD GRID
+  ──────────────────────────────── */
+  .hint {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: rgba(200,169,122,0.4);
+    letter-spacing: 0.1em;
+    text-align: center;
+    font-style: italic;
+  }
+
+  @media (max-width: 460px) {
+    .slide, .carousel-track .slide { min-width: calc(100vw - 40px); max-width: calc(100vw - 40px); }
+    .carousel-wrapper { width: calc(100vw - 40px); }
+    .slide { height: 480px; padding: 40px 30px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="carousel-wrapper">
+  <div class="carousel-track" id="track">
+
+    <!-- SLIDE 1 — CAPA -->
+    <div class="slide slide-1">
+      <span class="slide-num">01 / 06</span>
+      <div class="top-ornament">
+        <span class="brand">Santo Xêro</span>
+        <div class="rule"></div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:14px;">
+        <div class="titulo">Nasce<br>do <em>encontro</em></div>
+        <div class="sub">entre o vegetal,<br>o cuidado e o sagrado</div>
+      </div>
+
+      <div class="selo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#C8A97A" stroke-width="0.8"/>
+          <path d="M14 4 C14 4 8 9 8 14 C8 19 11 22 14 24 C17 22 20 19 20 14 C20 9 14 4 14 4Z" stroke="#C8A97A" stroke-width="0.8" fill="none"/>
+          <line x1="14" y1="4" x2="14" y2="24" stroke="#C8A97A" stroke-width="0.5" opacity="0.5"/>
+        </svg>
+        <span style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.2em;color:var(--areia);opacity:0.7;">BOTÂNICA<br>COM ALMA</span>
+      </div>
+
+      <span class="bottom-tag">RAIZ · EQUILÍBRIO · VERDADE</span>
+    </div>
+
+    <!-- SLIDE 2 — O QUE É -->
+    <div class="slide slide-2">
+      <span class="slide-num" style="color:var(--argila);">02 / 06</span>
+      <span class="eyebrow">o que é</span>
+      <div class="rule" style="background:var(--argila);"></div>
+      <div class="heading">
+        Vegetal.<br>Sagrado.<br><em>Vivo.</em>
+      </div>
+      <div class="rule" style="background:var(--argila);"></div>
+      <p class="body">
+        Santo Xêro nasce do encontro entre saberes antigos e a força dos óleos vegetais ancestrais — uma linha que carrega memória, intenção e verdade em cada gota.
+      </p>
+      <span class="ornament-leaf">🌿</span>
+    </div>
+
+    <!-- SLIDE 3 — ÓLEOS ANCESTRAIS -->
+    <div class="slide slide-3">
+      <span class="slide-num" style="color:var(--areia);opacity:0.4;">03 / 06</span>
+      <div class="big-word">óleos</div>
+      <div class="content">
+        <span class="eyebrow">ingredientes</span>
+        <div class="rule" style="background:var(--areia);opacity:0.2;"></div>
+        <div class="heading">
+          Óleos <strong>ancestrais</strong><br>ervas de uso<br>tradicional
+        </div>
+        <div class="items">
+          <div class="item"><span class="item-dot"></span><span>Óleos vegetais de extração cuidadosa e origem rastreada</span></div>
+          <div class="item"><span class="item-dot"></span><span>Ervas de uso tradicional e popular</span></div>
+          <div class="item"><span class="item-dot"></span><span>Saberes passados de geração em geração</span></div>
+          <div class="item"><span class="item-dot"></span><span>Formulação com intenção, não com pressa</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4 — BANHOS DE ERVAS -->
+    <div class="slide slide-4">
+      <span class="slide-num" style="color:var(--areia);opacity:0.4;">04 / 06</span>
+      <div class="circle-bg"></div>
+      <div class="circle-bg-2"></div>
+      <div class="number">∞</div>
+      <div class="content">
+        <span class="eyebrow">ritual</span>
+        <div class="heading">
+          Banhos de<br><em>ervas</em>
+        </div>
+        <div class="rule" style="background:var(--areia);opacity:0.2;width:40px;height:1px;"></div>
+        <p class="body">
+          Não é higiene — é ritual.<br>Cada banho carrega a memória das plantas e a intenção de quem cuida.
+        </p>
+        <span class="tag-pill">sabedoria ancestral</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 5 — NÃO É COSMÉTICO VERDE -->
+    <div class="slide slide-5">
+      <span class="slide-num" style="color:var(--terra);opacity:0.4;">05 / 06</span>
+      <div class="big-no">não.</div>
+      <div class="content">
+        <span class="eyebrow">posicionamento</span>
+        <div class="heading">
+          Não é cosmético<br>verde <em>genérico</em>
+        </div>
+        <div class="divider"><span>mas sim</span></div>
+        <p class="afirmacao">
+          "Botânica com alma.<br>Santo Xêro é raiz —<br>equilíbrio e verdade."
+        </p>
+      </div>
+    </div>
+
+    <!-- SLIDE 6 — MANIFESTO FINAL -->
+    <div class="slide slide-6">
+      <span class="slide-num">06 / 06</span>
+      <div class="top">
+        <span class="eyebrow">manifesto</span>
+        <div class="rule" style="background:var(--areia);opacity:0.2;width:40px;height:1px;"></div>
+      </div>
+
+      <div class="mid">
+        <p class="manifesto">
+          Não estamos aqui<br>para parecer natural.<br>
+          Estamos aqui para ser <strong>raiz</strong>.<br><br>
+          Para trazer o <strong>equilíbrio</strong><br>que só a terra conhece<br>
+          e a <strong>verdade</strong><br>que só o sagrado guarda.
+        </p>
+      </div>
+
+      <div class="bottom">
+        <div class="rule" style="background:var(--areia);opacity:0.2;width:40px;height:1px;"></div>
+        <span class="brand-final">Santo Xêro</span>
+        <span class="tagline-final">botânica com alma</span>
+      </div>
+    </div>
+
+  </div><!-- /track -->
+</div><!-- /wrapper -->
+
+<!-- Controles -->
+<div class="controls">
+  <button class="btn" id="prev">&#8592;</button>
+  <div class="dots" id="dots"></div>
+  <button class="btn" id="next">&#8594;</button>
+</div>
+
+<p class="hint">← deslize ou use as setas →</p>
+
+<script>
+  const track = document.getElementById('track');
+  const dotsContainer = document.getElementById('dots');
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+
+  // criar dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(d);
+  });
+
+  function goTo(n) {
+    current = (n + total) % total;
+    const slideW = slides[0].offsetWidth;
+    track.style.transform = `translateX(-${current * slideW}px)`;
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('next').addEventListener('click', () => goTo(current + 1));
+
+  // touch/swipe
+  let startX = 0;
+  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+  track.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+  });
+
+  // teclado
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft')  goTo(current - 1);
+  });
+
+  // redimensionar
+  window.addEventListener('resize', () => goTo(current));
+</script>
+</body>
+</html>
