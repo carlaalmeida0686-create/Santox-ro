@@ -3,782 +3,1974 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Santo Xêro — Carrossel</title>
+<title>Santo Xêro — Hub Criativo</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=IM+Fell+DW+Pica:ital@0;1&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --terra: #3B2A1A;
-    --argila: #7A5C3E;
-    --areia: #C8A97A;
-    --creme: #F0E6D0;
-    --folha: #4A5E3A;
-    --ouro: #C49A3A;
-    --fumo: #2A1F14;
-    --branco-erva: #FAF5EB;
-  }
-
-  body {
-    background: var(--fumo);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    font-family: 'Cormorant Garamond', serif;
-    padding: 20px;
-    gap: 24px;
-  }
-
-  /* ───── WRAPPER DO CARROSSEL ───── */
-  .carousel-wrapper {
-    position: relative;
-    width: 420px;
-    max-width: 100%;
-  }
-
-  .carousel-track {
-    display: flex;
-    transition: transform 0.65s cubic-bezier(0.77, 0, 0.175, 1);
-    will-change: transform;
-  }
-
-  /* ───── SLIDE BASE ───── */
-  .slide {
-    min-width: 420px;
-    max-width: 420px;
-    height: 520px;
-    border-radius: 4px;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 48px 40px;
-    flex-shrink: 0;
-  }
-
-  /* textura de grão sobre todos */
-  .slide::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
-    pointer-events: none;
-    mix-blend-mode: overlay;
-    border-radius: 4px;
-  }
-
-  /* número do slide */
-  .slide-num {
-    position: absolute;
-    top: 22px;
-    right: 28px;
-    font-family: 'Cinzel', serif;
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    opacity: 0.45;
-  }
-
-  /* linha decorativa */
-  .rule {
-    width: 48px;
-    height: 1px;
-    background: currentColor;
-    opacity: 0.4;
-    margin: 18px auto;
-  }
-
-  .rule.tall { height: 40px; width: 1px; }
-
-  /* ────────────────────────────────
-     SLIDE 1 — CAPA
-  ──────────────────────────────── */
-  .slide-1 {
-    background: var(--terra);
-    color: var(--creme);
-    justify-content: space-between;
-  }
-
-  .slide-1 .top-ornament {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    padding-top: 8px;
-  }
-
-  .slide-1 .brand {
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    letter-spacing: 0.35em;
-    color: var(--areia);
-    text-transform: uppercase;
-  }
-
-  .slide-1 .titulo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 62px;
-    font-weight: 300;
-    line-height: 0.9;
-    text-align: center;
-    color: var(--creme);
-    letter-spacing: -0.01em;
-    margin-top: 10px;
-  }
-
-  .slide-1 .titulo em {
-    font-style: italic;
-    color: var(--areia);
-  }
-
-  .slide-1 .selo {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    border: 1px solid rgba(200,169,122,0.35);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    padding: 14px;
-    gap: 4px;
-  }
-
-  .slide-1 .selo svg { opacity: 0.7; }
-
-  .slide-1 .sub {
-    font-family: 'IM Fell DW Pica', serif;
-    font-style: italic;
-    font-size: 15px;
-    color: var(--areia);
-    text-align: center;
-    letter-spacing: 0.04em;
-  }
-
-  .slide-1 .bottom-tag {
-    font-family: 'Cinzel', serif;
-    font-size: 9.5px;
-    letter-spacing: 0.3em;
-    color: var(--argila);
-    padding-bottom: 4px;
-  }
-
-  /* ────────────────────────────────
-     SLIDE 2 — O QUE É
-  ──────────────────────────────── */
-  .slide-2 {
-    background: var(--creme);
-    color: var(--terra);
-  }
-
-  .slide-2 .eyebrow {
-    font-family: 'Cinzel', serif;
-    font-size: 9.5px;
-    letter-spacing: 0.4em;
-    color: var(--argila);
-    text-align: center;
-  }
-
-  .slide-2 .heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 38px;
-    font-weight: 300;
-    line-height: 1.1;
-    text-align: center;
-    color: var(--terra);
-  }
-
-  .slide-2 .heading em {
-    font-style: italic;
-    color: var(--argila);
-  }
-
-  .slide-2 .body {
-    font-size: 17px;
-    line-height: 1.75;
-    text-align: center;
-    color: #5a3f28;
-    max-width: 300px;
-  }
-
-  .slide-2 .ornament-leaf {
-    font-size: 28px;
-    opacity: 0.5;
-    display: block;
-    text-align: center;
-  }
-
-  /* ────────────────────────────────
-     SLIDE 3 — ÓLEOS ANCESTRAIS
-  ──────────────────────────────── */
-  .slide-3 {
-    background: #2C3A25;
-    color: var(--branco-erva);
-  }
-
-  .slide-3 .big-word {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 76px;
-    font-weight: 300;
-    font-style: italic;
-    line-height: 0.85;
-    text-align: center;
-    color: rgba(240,230,208,0.15);
-    position: absolute;
-    bottom: 60px;
-    left: 0; right: 0;
-    letter-spacing: -0.02em;
-    pointer-events: none;
-  }
-
-  .slide-3 .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .slide-3 .eyebrow {
-    font-family: 'Cinzel', serif;
-    font-size: 9px;
-    letter-spacing: 0.45em;
-    color: var(--areia);
-  }
-
-  .slide-3 .heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 36px;
-    font-weight: 300;
-    text-align: center;
-    line-height: 1.15;
-  }
-
-  .slide-3 .heading strong {
-    font-weight: 600;
-    color: var(--areia);
-  }
-
-  .slide-3 .items {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    max-width: 300px;
-  }
-
-  .slide-3 .item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    font-size: 15.5px;
-    line-height: 1.5;
-    color: rgba(240,230,208,0.88);
-  }
-
-  .slide-3 .item-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--ouro);
-    flex-shrink: 0;
-    margin-top: 7px;
-  }
-
-  /* ────────────────────────────────
-     SLIDE 4 — BANHOS DE ERVAS
-  ──────────────────────────────── */
-  .slide-4 {
-    background: var(--fumo);
-    color: var(--creme);
-    overflow: hidden;
-  }
-
-  .slide-4 .circle-bg {
-    position: absolute;
-    width: 320px;
-    height: 320px;
-    border-radius: 50%;
-    border: 1px solid rgba(200,169,122,0.12);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .slide-4 .circle-bg-2 {
-    position: absolute;
-    width: 220px;
-    height: 220px;
-    border-radius: 50%;
-    border: 1px solid rgba(200,169,122,0.08);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .slide-4 .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    position: relative;
-    z-index: 1;
-    text-align: center;
-  }
-
-  .slide-4 .eyebrow {
-    font-family: 'Cinzel', serif;
-    font-size: 9px;
-    letter-spacing: 0.45em;
-    color: var(--areia);
-    opacity: 0.7;
-  }
-
-  .slide-4 .number {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 100px;
-    font-weight: 300;
-    font-style: italic;
-    line-height: 0.8;
-    color: rgba(200,169,122,0.15);
-    position: absolute;
-    top: 80px;
-    right: 28px;
-  }
-
-  .slide-4 .heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 40px;
-    font-weight: 300;
-    line-height: 1.1;
-  }
-
-  .slide-4 .heading em {
-    font-style: italic;
-    color: var(--areia);
-  }
-
-  .slide-4 .body {
-    font-size: 16.5px;
-    line-height: 1.7;
-    max-width: 290px;
-    opacity: 0.85;
-  }
-
-  .slide-4 .tag-pill {
-    background: rgba(200,169,122,0.12);
-    border: 1px solid rgba(200,169,122,0.25);
-    color: var(--areia);
-    font-family: 'Cinzel', serif;
-    font-size: 9px;
-    letter-spacing: 0.3em;
-    padding: 6px 18px;
-    border-radius: 40px;
-    text-transform: uppercase;
-  }
-
-  /* ────────────────────────────────
-     SLIDE 5 — NÃO É COSMÉTICO VERDE
-  ──────────────────────────────── */
-  .slide-5 {
-    background: var(--areia);
-    color: var(--fumo);
-  }
-
-  .slide-5 .big-no {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 120px;
-    font-weight: 300;
-    font-style: italic;
-    line-height: 0.85;
-    color: rgba(42,31,20,0.08);
-    position: absolute;
-    top: 30px;
-    left: -10px;
-    pointer-events: none;
-  }
-
-  .slide-5 .content {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    align-items: center;
-  }
-
-  .slide-5 .eyebrow {
-    font-family: 'Cinzel', serif;
-    font-size: 9px;
-    letter-spacing: 0.45em;
-    color: var(--terra);
-    opacity: 0.6;
-  }
-
-  .slide-5 .heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 36px;
-    font-weight: 300;
-    line-height: 1.15;
-    color: var(--terra);
-  }
-
-  .slide-5 .heading em { font-style: italic; }
-
-  .slide-5 .divider {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: 14px;
-    width: 100%;
-    max-width: 300px;
-  }
-  .slide-5 .divider::before,
-  .slide-5 .divider::after {
-    content: '';
-    height: 1px;
-    background: rgba(59,42,26,0.3);
-  }
-  .slide-5 .divider span {
-    font-family: 'Cinzel', serif;
-    font-size: 8.5px;
-    letter-spacing: 0.25em;
-    color: var(--terra);
-    opacity: 0.5;
-  }
-
-  .slide-5 .afirmacao {
-    font-family: 'IM Fell DW Pica', serif;
-    font-style: italic;
-    font-size: 22px;
-    line-height: 1.5;
-    text-align: center;
-    max-width: 280px;
-    color: var(--terra);
-  }
-
-  /* ────────────────────────────────
-     SLIDE 6 — RAIZ E VERDADE
-  ──────────────────────────────── */
-  .slide-6 {
-    background: var(--terra);
-    color: var(--creme);
-    justify-content: space-between;
-  }
-
-  .slide-6 .top {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    padding-top: 8px;
-  }
-
-  .slide-6 .eyebrow {
-    font-family: 'Cinzel', serif;
-    font-size: 9px;
-    letter-spacing: 0.45em;
-    color: var(--areia);
-    opacity: 0.7;
-  }
-
-  .slide-6 .mid {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    text-align: center;
-  }
-
-  .slide-6 .manifesto {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 21px;
-    font-weight: 300;
-    line-height: 1.7;
-    text-align: center;
-    max-width: 300px;
-    color: var(--creme);
-  }
-
-  .slide-6 .manifesto strong {
-    color: var(--areia);
-    font-weight: 400;
-  }
-
-  .slide-6 .bottom {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    padding-bottom: 4px;
-  }
-
-  .slide-6 .brand-final {
-    font-family: 'Cinzel', serif;
-    font-size: 16px;
-    letter-spacing: 0.3em;
-    color: var(--areia);
-  }
-
-  .slide-6 .tagline-final {
-    font-family: 'IM Fell DW Pica', serif;
-    font-style: italic;
-    font-size: 13px;
-    color: rgba(200,169,122,0.6);
-    letter-spacing: 0.08em;
-  }
-
-  /* ────────────────────────────────
-     CONTROLES
-  ──────────────────────────────── */
-  .controls {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 1px solid rgba(200,169,122,0.3);
-    background: transparent;
-    color: var(--areia);
-    font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s, border-color 0.2s;
-  }
-
-  .btn:hover {
-    background: rgba(200,169,122,0.1);
-    border-color: rgba(200,169,122,0.6);
-  }
-
-  .dots {
-    display: flex;
-    gap: 8px;
-  }
-
-  .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: rgba(200,169,122,0.25);
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: background 0.2s, transform 0.2s;
-  }
-
-  .dot.active {
-    background: var(--areia);
-    transform: scale(1.3);
-  }
-
-  /* ────────────────────────────────
-     DOWNLOAD GRID
-  ──────────────────────────────── */
-  .hint {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 13px;
-    color: rgba(200,169,122,0.4);
-    letter-spacing: 0.1em;
-    text-align: center;
-    font-style: italic;
-  }
-
-  @media (max-width: 460px) {
-    .slide, .carousel-track .slide { min-width: calc(100vw - 40px); max-width: calc(100vw - 40px); }
-    .carousel-wrapper { width: calc(100vw - 40px); }
-    .slide { height: 480px; padding: 40px 30px; }
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --terra:       #3B2A1A;
+  --argila:      #7A5C3E;
+  --areia:       #C8A97A;
+  --creme:       #F0E6D0;
+  --ouro:        #C49A3A;
+  --fumo:        #2A1F14;
+  --branco-erva: #FAF5EB;
+  --verde-vib:   #7EC8A8;
+  --verde-escuro:#1A2832;
+}
+
+/* ═══════ BASE ═══════ */
+body {
+  background: var(--fumo);
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--creme);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ═══════ NAV LATERAL ═══════ */
+.side-nav {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 64px;
+  background: rgba(20,13,7,0.95);
+  border-right: 0.7px solid rgba(200,169,122,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 0;
+  gap: 6px;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+.nav-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: var(--areia);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  margin-bottom: 20px;
+  opacity: 0.7;
+}
+
+.nav-item {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s;
+  gap: 3px;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+.nav-item:hover, .nav-item.active {
+  background: rgba(200,169,122,0.1);
+}
+
+.nav-item svg { opacity: 0.5; transition: opacity 0.2s; }
+.nav-item:hover svg, .nav-item.active svg { opacity: 1; }
+
+.nav-item span {
+  font-family: 'Cinzel', serif;
+  font-size: 6px;
+  letter-spacing: 0.1em;
+  color: var(--areia);
+  opacity: 0.5;
+  text-transform: uppercase;
+}
+.nav-item:hover span, .nav-item.active span { opacity: 1; }
+
+.nav-sep {
+  width: 24px;
+  height: 0.7px;
+  background: rgba(200,169,122,0.15);
+  margin: 6px 0;
+}
+
+/* ═══════ LAYOUT PRINCIPAL ═══════ */
+.main {
+  margin-left: 64px;
+  min-height: 100vh;
+}
+
+/* ═══════ SECTIONS ═══════ */
+.section {
+  display: none;
+  min-height: 100vh;
+  padding: 40px 48px 80px;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  animation: fadeIn 0.4s ease;
+}
+
+.section.active { display: flex; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════ SECTION HEADERS ═══════ */
+.sec-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.sec-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.5em;
+  color: var(--argila);
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.sec-title {
+  font-size: 48px;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--creme);
+}
+
+.sec-title em { font-style: italic; color: var(--areia); }
+
+.sec-rule {
+  width: 40px;
+  height: 0.7px;
+  background: var(--areia);
+  opacity: 0.25;
+}
+
+.sec-sub {
+  font-family: 'IM Fell DW Pica', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: rgba(200,169,122,0.6);
+  letter-spacing: 0.06em;
+}
+
+/* ══════════════════════════════════════
+   SECÇÃO 1 — CARROSSEL (original intacto)
+══════════════════════════════════════ */
+.carousel-wrapper {
+  position: relative;
+  width: 420px;
+  max-width: 100%;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.65s cubic-bezier(0.77,0,0.175,1);
+  will-change: transform;
+}
+
+.slide {
+  min-width: 420px;
+  max-width: 420px;
+  height: 520px;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 40px;
+  flex-shrink: 0;
+}
+
+.slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  border-radius: 4px;
+}
+
+.slide-num { position: absolute; top: 22px; right: 28px; font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.25em; opacity: 0.45; }
+.rule { width: 48px; height: 1px; background: currentColor; opacity: 0.4; margin: 18px auto; }
+
+.slide-1 { background: var(--terra); color: var(--creme); justify-content: space-between; }
+.slide-1 .top-ornament { display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 8px; }
+.slide-1 .brand { font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 0.35em; color: var(--areia); text-transform: uppercase; }
+.slide-1 .titulo { font-family: 'Cormorant Garamond', serif; font-size: 62px; font-weight: 300; line-height: 0.9; text-align: center; color: var(--creme); letter-spacing: -0.01em; margin-top: 10px; }
+.slide-1 .titulo em { font-style: italic; color: var(--areia); }
+.slide-1 .selo { width: 110px; height: 110px; border-radius: 50%; border: 1px solid rgba(200,169,122,0.35); display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 14px; gap: 4px; }
+.slide-1 .sub { font-family: 'IM Fell DW Pica', serif; font-style: italic; font-size: 15px; color: var(--areia); text-align: center; letter-spacing: 0.04em; }
+.slide-1 .bottom-tag { font-family: 'Cinzel', serif; font-size: 9.5px; letter-spacing: 0.3em; color: var(--argila); padding-bottom: 4px; }
+
+.slide-2 { background: var(--creme); color: var(--terra); }
+.slide-2 .eyebrow { font-family: 'Cinzel', serif; font-size: 9.5px; letter-spacing: 0.4em; color: var(--argila); text-align: center; }
+.slide-2 .heading { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 300; line-height: 1.1; text-align: center; color: var(--terra); }
+.slide-2 .heading em { font-style: italic; color: var(--argila); }
+.slide-2 .body { font-size: 17px; line-height: 1.75; text-align: center; color: #5a3f28; max-width: 300px; }
+.slide-2 .ornament-leaf { font-size: 28px; opacity: 0.5; display: block; text-align: center; }
+
+.slide-3 { background: #2C3A25; color: var(--branco-erva); }
+.slide-3 .big-word { font-family: 'Cormorant Garamond', serif; font-size: 76px; font-weight: 300; font-style: italic; line-height: 0.85; text-align: center; color: rgba(240,230,208,0.15); position: absolute; bottom: 60px; left: 0; right: 0; letter-spacing: -0.02em; pointer-events: none; }
+.slide-3 .content { display: flex; flex-direction: column; align-items: center; gap: 14px; position: relative; z-index: 1; }
+.slide-3 .eyebrow { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.45em; color: var(--areia); }
+.slide-3 .heading { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; text-align: center; line-height: 1.15; }
+.slide-3 .heading strong { font-weight: 600; color: var(--areia); }
+.slide-3 .items { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 300px; }
+.slide-3 .item { display: flex; align-items: flex-start; gap: 12px; font-size: 15.5px; line-height: 1.5; color: rgba(240,230,208,0.88); }
+.slide-3 .item-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ouro); flex-shrink: 0; margin-top: 7px; }
+
+.slide-4 { background: var(--fumo); color: var(--creme); overflow: hidden; }
+.slide-4 .circle-bg { position: absolute; width: 320px; height: 320px; border-radius: 50%; border: 1px solid rgba(200,169,122,0.12); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.slide-4 .circle-bg-2 { position: absolute; width: 220px; height: 220px; border-radius: 50%; border: 1px solid rgba(200,169,122,0.08); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.slide-4 .content { display: flex; flex-direction: column; align-items: center; gap: 12px; position: relative; z-index: 1; text-align: center; }
+.slide-4 .eyebrow { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.45em; color: var(--areia); opacity: 0.7; }
+.slide-4 .number { font-family: 'Cormorant Garamond', serif; font-size: 100px; font-weight: 300; font-style: italic; line-height: 0.8; color: rgba(200,169,122,0.15); position: absolute; top: 80px; right: 28px; }
+.slide-4 .heading { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; line-height: 1.1; }
+.slide-4 .heading em { font-style: italic; color: var(--areia); }
+.slide-4 .body { font-size: 16.5px; line-height: 1.7; max-width: 290px; opacity: 0.85; }
+.slide-4 .tag-pill { background: rgba(200,169,122,0.12); border: 1px solid rgba(200,169,122,0.25); color: var(--areia); font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.3em; padding: 6px 18px; border-radius: 40px; text-transform: uppercase; }
+
+.slide-5 { background: var(--areia); color: var(--fumo); }
+.slide-5 .big-no { font-family: 'Cormorant Garamond', serif; font-size: 120px; font-weight: 300; font-style: italic; line-height: 0.85; color: rgba(42,31,20,0.08); position: absolute; top: 30px; left: -10px; pointer-events: none; }
+.slide-5 .content { display: flex; flex-direction: column; gap: 16px; position: relative; z-index: 1; text-align: center; align-items: center; }
+.slide-5 .eyebrow { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.45em; color: var(--terra); opacity: 0.6; }
+.slide-5 .heading { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; line-height: 1.15; color: var(--terra); }
+.slide-5 .heading em { font-style: italic; }
+.slide-5 .divider { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 14px; width: 100%; max-width: 300px; }
+.slide-5 .divider::before, .slide-5 .divider::after { content: ''; height: 1px; background: rgba(59,42,26,0.3); }
+.slide-5 .divider span { font-family: 'Cinzel', serif; font-size: 8.5px; letter-spacing: 0.25em; color: var(--terra); opacity: 0.5; }
+.slide-5 .afirmacao { font-family: 'IM Fell DW Pica', serif; font-style: italic; font-size: 22px; line-height: 1.5; text-align: center; max-width: 280px; color: var(--terra); }
+
+.slide-6 { background: var(--terra); color: var(--creme); justify-content: space-between; }
+.slide-6 .top { display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 8px; }
+.slide-6 .eyebrow { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.45em; color: var(--areia); opacity: 0.7; }
+.slide-6 .mid { display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+.slide-6 .manifesto { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 300; line-height: 1.7; text-align: center; max-width: 300px; color: var(--creme); }
+.slide-6 .manifesto strong { color: var(--areia); font-weight: 400; }
+.slide-6 .bottom { display: flex; flex-direction: column; align-items: center; gap: 8px; padding-bottom: 4px; }
+.slide-6 .brand-final { font-family: 'Cinzel', serif; font-size: 16px; letter-spacing: 0.3em; color: var(--areia); }
+.slide-6 .tagline-final { font-family: 'IM Fell DW Pica', serif; font-style: italic; font-size: 13px; color: rgba(200,169,122,0.6); letter-spacing: 0.08em; }
+
+.controls { display: flex; align-items: center; gap: 20px; }
+.btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(200,169,122,0.3); background: transparent; color: var(--areia); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, border-color 0.2s; }
+.btn:hover { background: rgba(200,169,122,0.1); border-color: rgba(200,169,122,0.6); }
+.dots { display: flex; gap: 8px; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(200,169,122,0.25); border: none; cursor: pointer; padding: 0; transition: background 0.2s, transform 0.2s; }
+.dot.active { background: var(--areia); transform: scale(1.3); }
+.hint { font-family: 'Cormorant Garamond', serif; font-size: 13px; color: rgba(200,169,122,0.4); letter-spacing: 0.1em; text-align: center; font-style: italic; }
+
+/* ══════════════════════════════════════
+   SECÇÃO 2 — CARDS INSTAGRAM 1:1
+══════════════════════════════════════ */
+.ig-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 900px;
+}
+
+.ig-card {
+  aspect-ratio: 1/1;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 22px;
+  cursor: pointer;
+  transition: transform 0.25s;
+}
+
+.ig-card:hover { transform: translateY(-5px) scale(1.01); }
+
+.ig1 { background: #2E1F10; color: #F0E6D0; }
+.ig2 { background: #F0EAD8; color: #2E1F10; }
+.ig3 { background: #1A2832; color: #E8F4F0; }
+.ig4 { background: #3A2810; color: #F5EDD8; }
+.ig5 { background: #C8A97A; color: #1E1208; }
+.ig6 { background: #0F1A14; color: #D8EDD8; }
+
+.ig-num { position: absolute; top: 14px; right: 16px; font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.25em; opacity: 0.35; }
+.ig-eyebrow { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.4em; text-transform: uppercase; text-align: center; opacity: 0.6; }
+.ig-rule { width: 32px; height: 0.7px; margin: 8px auto; opacity: 0.3; }
+
+/* ══════════════════════════════════════
+   SECÇÃO 3 — BANCO DE FRASES
+══════════════════════════════════════ */
+.frases-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ftab {
+  padding: 8px 20px;
+  border-radius: 30px;
+  border: 0.7px solid rgba(200,169,122,0.25);
+  background: transparent;
+  color: rgba(200,169,122,0.6);
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+
+.ftab:hover { border-color: rgba(200,169,122,0.6); color: var(--areia); }
+.ftab.on { background: rgba(200,169,122,0.12); border-color: var(--areia); color: var(--areia); }
+
+.frases-panel { display: none; width: 100%; max-width: 860px; }
+.frases-panel.on { display: block; }
+
+.frases-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.frase-card {
+  background: rgba(255,255,255,0.03);
+  border: 0.7px solid rgba(200,169,122,0.12);
+  border-radius: 8px;
+  padding: 20px 22px 16px;
+  position: relative;
+  transition: border-color 0.2s, background 0.2s;
+  cursor: default;
+}
+
+.frase-card:hover {
+  border-color: rgba(200,169,122,0.3);
+  background: rgba(200,169,122,0.04);
+}
+
+.frase-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  color: var(--argila);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.frase-texto {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 21px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--creme);
+  margin-bottom: 12px;
+}
+
+.frase-nota {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(200,169,122,0.5);
+  font-style: italic;
+}
+
+.copy-pill {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 0.5px solid rgba(200,169,122,0.2);
+  background: transparent;
+  color: rgba(200,169,122,0.5);
+  font-family: 'Cinzel', serif;
+  font-size: 7.5px;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.copy-pill:hover { background: rgba(200,169,122,0.1); color: var(--areia); border-color: var(--areia); }
+.copy-pill.ok { color: var(--verde-vib); border-color: var(--verde-vib); }
+
+/* ══════════════════════════════════════
+   SECÇÃO 4 — PROMPTS IA
+══════════════════════════════════════ */
+.prompts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 780px;
+}
+
+.prompt-card {
+  background: rgba(255,255,255,0.025);
+  border: 0.7px solid rgba(200,169,122,0.12);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.prompt-card:hover { border-color: rgba(200,169,122,0.25); }
+
+.prompt-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.prompt-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  border: 0.7px solid rgba(200,169,122,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.prompt-meta { flex: 1; }
+.prompt-titulo { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.2em; color: var(--areia); }
+.prompt-desc { font-size: 13px; color: rgba(200,169,122,0.5); margin-top: 2px; font-style: italic; }
+
+.prompt-chevron {
+  font-size: 12px;
+  color: rgba(200,169,122,0.4);
+  transition: transform 0.3s;
+}
+
+.prompt-card.open .prompt-chevron { transform: rotate(180deg); }
+
+.prompt-body {
+  display: none;
+  padding: 0 20px 20px;
+  border-top: 0.5px solid rgba(200,169,122,0.08);
+}
+
+.prompt-card.open .prompt-body { display: block; }
+
+.prompt-box {
+  background: rgba(0,0,0,0.25);
+  border: 0.5px solid rgba(200,169,122,0.1);
+  border-radius: 6px;
+  padding: 16px 18px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgba(240,230,208,0.75);
+  margin-top: 14px;
+  position: relative;
+}
+
+.prompt-box strong { color: var(--areia); font-weight: 400; }
+.prompt-box .placeholder { color: var(--verde-vib); font-style: italic; }
+
+.prompt-copy {
+  position: absolute;
+  top: 10px; right: 10px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  border: 0.5px solid rgba(200,169,122,0.2);
+  background: transparent;
+  color: rgba(200,169,122,0.5);
+  font-family: 'Cinzel', serif;
+  font-size: 7.5px;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.prompt-copy:hover { background: rgba(200,169,122,0.1); color: var(--areia); border-color: var(--areia); }
+.prompt-copy.ok { color: var(--verde-vib); border-color: var(--verde-vib); }
+
+.prompt-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+.p-tag {
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 0.5px solid rgba(200,169,122,0.15);
+  font-family: 'Cinzel', serif;
+  font-size: 7.5px;
+  letter-spacing: 0.15em;
+  color: rgba(200,169,122,0.45);
+}
+
+/* ══════════════════════════════════════
+   SECÇÃO 5 — DICAS DE POSTAGEM
+══════════════════════════════════════ */
+.dicas-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+}
+
+.dica-bloco {
+  background: rgba(255,255,255,0.025);
+  border: 0.7px solid rgba(200,169,122,0.12);
+  border-radius: 10px;
+  padding: 24px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dica-bloco.destaque {
+  background: rgba(200,169,122,0.06);
+  border-color: rgba(200,169,122,0.25);
+  grid-column: span 2;
+}
+
+.dica-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dica-icone {
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  background: rgba(200,169,122,0.08);
+  border: 0.7px solid rgba(200,169,122,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.dica-titulo { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.3em; color: var(--areia); text-transform: uppercase; }
+.dica-subtitulo { font-size: 12px; color: rgba(200,169,122,0.5); margin-top: 2px; font-style: italic; }
+
+.dica-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+.dica-list li {
+  display: flex;
+  gap: 10px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: rgba(240,230,208,0.8);
+}
+
+.dica-list li::before {
+  content: '·';
+  color: var(--areia);
+  opacity: 0.5;
+  flex-shrink: 0;
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.dica-list li strong { color: var(--areia); font-weight: 400; }
+
+.horario-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.horario-dia {
+  background: rgba(200,169,122,0.05);
+  border: 0.5px solid rgba(200,169,122,0.1);
+  border-radius: 6px;
+  padding: 10px 6px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.h-dia { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.2em; color: var(--areia); }
+.h-hora { font-size: 11px; color: rgba(240,230,208,0.6); line-height: 1.5; }
+.h-tipo { font-family: 'Cinzel', serif; font-size: 7px; letter-spacing: 0.15em; color: var(--argila); margin-top: 2px; }
+
+/* ══════════════════════════════════════
+   SECÇÃO 6 — HASHTAGS
+══════════════════════════════════════ */
+.hash-grupos {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 780px;
+}
+
+.hash-grupo {
+  background: rgba(255,255,255,0.025);
+  border: 0.7px solid rgba(200,169,122,0.12);
+  border-radius: 10px;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hash-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hash-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.3em; color: var(--areia); }
+.hash-count { font-size: 12px; color: rgba(200,169,122,0.4); font-style: italic; }
+
+.hash-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.htag {
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 0.5px solid rgba(200,169,122,0.18);
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: rgba(200,169,122,0.65);
+  transition: all 0.15s;
+  cursor: pointer;
+  user-select: none;
+}
+
+.htag:hover { background: rgba(200,169,122,0.1); color: var(--areia); border-color: rgba(200,169,122,0.4); }
+.htag.sel { background: rgba(200,169,122,0.12); color: var(--areia); border-color: var(--areia); }
+
+.hash-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 0.5px solid rgba(200,169,122,0.08);
+}
+
+.hash-count-sel { font-size: 13px; color: rgba(200,169,122,0.5); font-style: italic; flex: 1; }
+
+.hash-copy-btn {
+  padding: 7px 20px;
+  border-radius: 20px;
+  border: 0.7px solid rgba(200,169,122,0.25);
+  background: transparent;
+  color: var(--areia);
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.hash-copy-btn:hover { background: rgba(200,169,122,0.1); }
+.hash-copy-btn.ok { color: var(--verde-vib); border-color: var(--verde-vib); }
+
+/* ══════════════════════════════════════
+   SECÇÃO 7 — CALENDÁRIO
+══════════════════════════════════════ */
+.cal-semana {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 980px;
+}
+
+.cal-dia {
+  background: rgba(255,255,255,0.025);
+  border: 0.7px solid rgba(200,169,122,0.1);
+  border-radius: 8px;
+  padding: 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 220px;
+  transition: border-color 0.2s;
+}
+
+.cal-dia:hover { border-color: rgba(200,169,122,0.25); }
+
+.cal-dia-nome { font-family: 'Cinzel', serif; font-size: 8.5px; letter-spacing: 0.3em; color: var(--areia); opacity: 0.7; text-transform: uppercase; }
+.cal-formato {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-family: 'Cinzel', serif;
+  font-size: 7px;
+  letter-spacing: 0.18em;
+  border: 0.5px solid;
+}
+
+.f-feed { color: #7EC8A8; border-color: rgba(126,200,168,0.4); background: rgba(126,200,168,0.06); }
+.f-reels { color: #C8A97A; border-color: rgba(200,169,122,0.4); background: rgba(200,169,122,0.06); }
+.f-stories { color: #D4A0C4; border-color: rgba(212,160,196,0.4); background: rgba(212,160,196,0.06); }
+.f-carrossel { color: #9ABCE0; border-color: rgba(154,188,224,0.4); background: rgba(154,188,224,0.06); }
+
+.cal-tema {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--creme);
+}
+
+.cal-frase {
+  font-size: 12px;
+  font-style: italic;
+  color: rgba(200,169,122,0.55);
+  line-height: 1.5;
+  border-top: 0.5px solid rgba(200,169,122,0.08);
+  padding-top: 8px;
+}
+
+.cal-hora {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: rgba(200,169,122,0.35);
+  margin-top: auto;
+}
+
+/* ══════════════════════════════════════
+   MODAL CARDS IG
+══════════════════════════════════════ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15,8,3,0.9);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-overlay.open { display: flex; }
+
+.modal-card-wrap {
+  width: min(400px, 88vw);
+  aspect-ratio: 1/1;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.modal-nav { display: flex; gap: 12px; align-items: center; }
+
+.modal-btn {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(200,169,122,0.25);
+  background: transparent;
+  color: var(--areia);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+
+.modal-btn:hover { background: rgba(200,169,122,0.1); }
+.modal-close { position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; border-radius: 50%; border: 0.7px solid rgba(200,169,122,0.2); background: rgba(0,0,0,0.6); color: var(--areia); cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; z-index: 10; }
+.modal-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.3em; color: rgba(200,169,122,0.5); }
+
+/* ══════════════════════════════════════
+   TOAST
+══════════════════════════════════════ */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(30,20,10,0.95);
+  border: 0.7px solid rgba(126,200,168,0.4);
+  color: var(--verde-vib);
+  font-family: 'Cinzel', serif;
+  font-size: 9.5px;
+  letter-spacing: 0.25em;
+  padding: 10px 24px;
+  border-radius: 30px;
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ══════════════════════════════════════
+   RESPONSIVO
+══════════════════════════════════════ */
+@media (max-width: 900px) {
+  .ig-grid { grid-template-columns: repeat(2, 1fr); }
+  .dicas-layout { grid-template-columns: 1fr; }
+  .dica-bloco.destaque { grid-column: span 1; }
+  .cal-semana { grid-template-columns: repeat(3, 1fr); }
+  .horario-grid { grid-template-columns: repeat(4, 1fr); }
+  .frases-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .main { margin-left: 0; }
+  .side-nav { display: none; }
+  .section { padding: 24px 16px 60px; }
+  .slide, .carousel-track .slide { min-width: calc(100vw - 60px); max-width: calc(100vw - 60px); }
+  .carousel-wrapper { width: calc(100vw - 60px); }
+  .slide { height: 460px; padding: 36px 24px; }
+  .sec-title { font-size: 34px; }
+  .ig-grid { grid-template-columns: 1fr; max-width: 320px; }
+  .cal-semana { grid-template-columns: 1fr; }
+  .horario-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(200,169,122,0.2); border-radius: 2px; }
 </style>
 </head>
 <body>
 
-<div class="carousel-wrapper">
-  <div class="carousel-track" id="track">
+<!-- ══════════════ NAV LATERAL ══════════════ -->
+<nav class="side-nav">
+  <span class="nav-logo">SANTO XÊRO</span>
 
-    <!-- SLIDE 1 — CAPA -->
-    <div class="slide slide-1">
-      <span class="slide-num">01 / 06</span>
-      <div class="top-ornament">
-        <span class="brand">Santo Xêro</span>
-        <div class="rule"></div>
+  <button class="nav-item active" onclick="showSection('carrossel')" title="Carrossel">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8A97A" stroke-width="1.2">
+      <rect x="2" y="6" width="14" height="12" rx="1"/><rect x="17" y="8" width="5" height="8" rx="1" opacity="0.4"/>
+    </svg>
+    <span>slides</span>
+  </button>
+
+  <button class="nav-item" onclick="showSection('cards')" title="Cards Instagram">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8A97A" stroke-width="1.2">
+      <rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/>
+    </svg>
+    <span>cards</span>
+  </button>
+
+  <div class="nav-sep"></div>
+
+  <button class="nav-item" onclick="showSection('frases')" title="Frases">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8A97A" stroke-width="1.2">
+      <path d="M6 4h12M6 8h8M6 12h10M6 16h6"/>
+    </svg>
+    <span>frases</span>
+  </button>
+
+  <button class="nav-item" onclick="showSection('prompts')" title="Prompts IA">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8A97A" stroke-width="1.2">
+      <circle cx="12" cy="12" r="9"/><path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3c0 1.5-1 2.5-2 3v1"/><circle cx="12" cy="18" r="0.8" fill="#C8A97A"/>
+    </svg>
+    <span>prompts</span>
+  </button>
+
+  <button class="nav-item" onclick="showSection('dicas')" title="Dicas">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8A97A" stroke-width="1.2">
+      <path d="M12 2L12 6M6 12H2M22 12H18M4.9 4.9L7.8 7.8M19.1 4.9L16.2 7.8"/><circle cx="12" cy="12" r="5"/><path d="M12 17v5"/>
+    </svg>
+    <span>dicas</span>
+  </button>
+
+  <div class="nav-sep"></div>
+
+  <button class="nav-item" onclick="showSection('hashtags')" title="Hashtags">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8A97A" stroke-width="1.2">
+      <line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/>
+    </svg>
+    <span>tags</span>
+  </button>
+
+  <button class="nav-item" onclick="showSection('calendario')" title="Calendário">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8A97A" stroke-width="1.2">
+      <rect x="3" y="4" width="18" height="17" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+    </svg>
+    <span>agenda</span>
+  </button>
+</nav>
+
+<!-- ══════════════ MAIN ══════════════ -->
+<main class="main">
+
+  <!-- ─── SEÇÃO 1: CARROSSEL ─── -->
+  <section class="section active" id="sec-carrossel">
+    <div class="sec-header">
+      <span class="sec-eyebrow">apresentação</span>
+      <h1 class="sec-title">Carrossel <em>Santo Xêro</em></h1>
+      <div class="sec-rule"></div>
+      <p class="sec-sub">6 slides · pronto para o Instagram e apresentações</p>
+    </div>
+
+    <div class="carousel-wrapper">
+      <div class="carousel-track" id="track">
+
+        <div class="slide slide-1">
+          <span class="slide-num">01 / 06</span>
+          <div class="top-ornament">
+            <span class="brand">Santo Xêro</span>
+            <div class="rule"></div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:14px;">
+            <div class="titulo">Nasce<br>do <em>encontro</em></div>
+            <div class="sub">entre o vegetal,<br>o cuidado e o sagrado</div>
+          </div>
+          <div class="selo">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <circle cx="14" cy="14" r="13" stroke="#C8A97A" stroke-width="0.8"/>
+              <path d="M14 4 C14 4 8 9 8 14 C8 19 11 22 14 24 C17 22 20 19 20 14 C20 9 14 4 14 4Z" stroke="#C8A97A" stroke-width="0.8" fill="none"/>
+              <line x1="14" y1="4" x2="14" y2="24" stroke="#C8A97A" stroke-width="0.5" opacity="0.5"/>
+            </svg>
+            <span style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.2em;color:var(--areia);opacity:0.7;">BOTÂNICA<br>COM ALMA</span>
+          </div>
+          <span class="bottom-tag">RAIZ · EQUILÍBRIO · VERDADE</span>
+        </div>
+
+        <div class="slide slide-2">
+          <span class="slide-num" style="color:var(--argila);">02 / 06</span>
+          <span class="eyebrow">o que é</span>
+          <div class="rule" style="background:var(--argila);"></div>
+          <div class="heading">Vegetal.<br>Sagrado.<br><em>Vivo.</em></div>
+          <div class="rule" style="background:var(--argila);"></div>
+          <p class="body">Santo Xêro nasce do encontro entre saberes antigos e a força dos óleos vegetais ancestrais — uma linha que carrega memória, intenção e verdade em cada gota.</p>
+          <span class="ornament-leaf">🌿</span>
+        </div>
+
+        <div class="slide slide-3">
+          <span class="slide-num" style="color:var(--areia);opacity:0.4;">03 / 06</span>
+          <div class="big-word">óleos</div>
+          <div class="content">
+            <span class="eyebrow">ingredientes</span>
+            <div class="rule" style="background:var(--areia);opacity:0.2;"></div>
+            <div class="heading">Óleos <strong>ancestrais</strong><br>ervas de uso<br>tradicional</div>
+            <div class="items">
+              <div class="item"><span class="item-dot"></span><span>Óleos vegetais de extração cuidadosa e origem rastreada</span></div>
+              <div class="item"><span class="item-dot"></span><span>Ervas de uso tradicional e popular</span></div>
+              <div class="item"><span class="item-dot"></span><span>Saberes passados de geração em geração</span></div>
+              <div class="item"><span class="item-dot"></span><span>Formulação com intenção, não com pressa</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide slide-4">
+          <span class="slide-num" style="color:var(--areia);opacity:0.4;">04 / 06</span>
+          <div class="circle-bg"></div>
+          <div class="circle-bg-2"></div>
+          <div class="number">∞</div>
+          <div class="content">
+            <span class="eyebrow">ritual</span>
+            <div class="heading">Banhos de<br><em>ervas</em></div>
+            <div class="rule" style="background:var(--areia);opacity:0.2;width:40px;height:1px;"></div>
+            <p class="body">Não é higiene — é ritual.<br>Cada banho carrega a memória das plantas e a intenção de quem cuida.</p>
+            <span class="tag-pill">sabedoria ancestral</span>
+          </div>
+        </div>
+
+        <div class="slide slide-5">
+          <span class="slide-num" style="color:var(--terra);opacity:0.4;">05 / 06</span>
+          <div class="big-no">não.</div>
+          <div class="content">
+            <span class="eyebrow">posicionamento</span>
+            <div class="heading">Não é cosmético<br>verde <em>genérico</em></div>
+            <div class="divider"><span>mas sim</span></div>
+            <p class="afirmacao">"Botânica com alma.<br>Santo Xêro é raiz —<br>equilíbrio e verdade."</p>
+          </div>
+        </div>
+
+        <div class="slide slide-6">
+          <span class="slide-num">06 / 06</span>
+          <div class="top">
+            <span class="eyebrow">manifesto</span>
+            <div class="rule" style="background:var(--areia);opacity:0.2;width:40px;height:1px;"></div>
+          </div>
+          <div class="mid">
+            <p class="manifesto">Não estamos aqui<br>para parecer natural.<br>Estamos aqui para ser <strong>raiz</strong>.<br><br>Para trazer o <strong>equilíbrio</strong><br>que só a terra conhece<br>e a <strong>verdade</strong><br>que só o sagrado guarda.</p>
+          </div>
+          <div class="bottom">
+            <div class="rule" style="background:var(--areia);opacity:0.2;width:40px;height:1px;"></div>
+            <span class="brand-final">Santo Xêro</span>
+            <span class="tagline-final">botânica com alma</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="prev">&#8592;</button>
+      <div class="dots" id="dots"></div>
+      <button class="btn" id="next">&#8594;</button>
+    </div>
+    <p class="hint">← deslize ou use as setas →</p>
+  </section>
+
+  <!-- ─── SEÇÃO 2: CARDS IG ─── -->
+  <section class="section" id="sec-cards">
+    <div class="sec-header">
+      <span class="sec-eyebrow">instagram · feed</span>
+      <h1 class="sec-title">Cards <em>1:1</em></h1>
+      <div class="sec-rule"></div>
+      <p class="sec-sub">formato quadrado · clique para ampliar</p>
+    </div>
+
+    <div class="ig-grid" id="igGrid">
+
+      <div class="ig-card ig1" onclick="openModal(0)">
+        <div style="position:absolute;inset:12px;border:0.6px solid rgba(200,169,122,0.2);border-radius:4px;pointer-events:none;"></div>
+        <span class="ig-num" style="color:#C8A97A;">01</span>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;width:100%;">
+          <span style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.4em;color:#C8A97A;">Santo Xêro</span>
+          <div style="width:32px;height:0.7px;background:#C8A97A;opacity:0.3;margin:0 auto;"></div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:300;line-height:0.95;color:#F0E6D0;">Nasce<br>do <em style="font-style:italic;color:#C8A97A;">encontro</em></div>
+          <div style="width:32px;height:0.7px;background:#C8A97A;opacity:0.3;margin:0 auto;"></div>
+          <div style="font-style:italic;font-size:13px;color:#C8A97A;opacity:0.85;line-height:1.6;font-family:'IM Fell DW Pica',serif;">entre o vegetal,<br>o sagrado e a frequência</div>
+        </div>
+        <span style="position:absolute;bottom:16px;font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.3em;color:#7A5030;text-align:center;left:0;right:0;">RAIZ · EQUILÍBRIO · VERDADE</span>
       </div>
 
-      <div style="display:flex;flex-direction:column;align-items:center;gap:14px;">
-        <div class="titulo">Nasce<br>do <em>encontro</em></div>
-        <div class="sub">entre o vegetal,<br>o cuidado e o sagrado</div>
+      <div class="ig-card ig2" onclick="openModal(1)">
+        <span class="ig-num" style="color:#7A5C3E;">02</span>
+        <span class="ig-eyebrow" style="color:#7A5C3E;">óleos vegetais</span>
+        <div class="ig-rule" style="background:#7A5C3E;"></div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;text-align:center;line-height:1.05;color:#3B2A1A;">Da terra.<br><em style="font-style:italic;color:#7A5C3E;">Com alma.</em></div>
+        <div class="ig-rule" style="background:#7A5C3E;"></div>
+        <div style="display:flex;flex-direction:column;gap:5px;width:100%;max-width:190px;">
+          <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:#4A3520;"><span style="width:4px;height:4px;border-radius:50%;background:#B8904A;flex-shrink:0;"></span><span>Extração natural cuidadosa</span></div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:#4A3520;"><span style="width:4px;height:4px;border-radius:50%;background:#B8904A;flex-shrink:0;"></span><span>Origem rastreada</span></div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:#4A3520;"><span style="width:4px;height:4px;border-radius:50%;background:#B8904A;flex-shrink:0;"></span><span>Formulação com intenção</span></div>
+        </div>
       </div>
 
-      <div class="selo">
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="14" cy="14" r="13" stroke="#C8A97A" stroke-width="0.8"/>
-          <path d="M14 4 C14 4 8 9 8 14 C8 19 11 22 14 24 C17 22 20 19 20 14 C20 9 14 4 14 4Z" stroke="#C8A97A" stroke-width="0.8" fill="none"/>
-          <line x1="14" y1="4" x2="14" y2="24" stroke="#C8A97A" stroke-width="0.5" opacity="0.5"/>
+      <div class="ig-card ig3" onclick="openModal(2)">
+        <svg style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;" width="240" height="240" viewBox="0 0 240 240" fill="none">
+          <circle cx="120" cy="120" r="108" stroke="rgba(126,200,168,0.07)" stroke-width="0.6"/>
+          <circle cx="120" cy="120" r="80"  stroke="rgba(126,200,168,0.09)" stroke-width="0.6"/>
+          <circle cx="120" cy="120" r="52"  stroke="rgba(126,200,168,0.08)" stroke-width="0.6"/>
+          <circle cx="120" cy="120" r="24"  stroke="rgba(126,200,168,0.12)" stroke-width="0.6"/>
         </svg>
-        <span style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.2em;color:var(--areia);opacity:0.7;">BOTÂNICA<br>COM ALMA</span>
-      </div>
-
-      <span class="bottom-tag">RAIZ · EQUILÍBRIO · VERDADE</span>
-    </div>
-
-    <!-- SLIDE 2 — O QUE É -->
-    <div class="slide slide-2">
-      <span class="slide-num" style="color:var(--argila);">02 / 06</span>
-      <span class="eyebrow">o que é</span>
-      <div class="rule" style="background:var(--argila);"></div>
-      <div class="heading">
-        Vegetal.<br>Sagrado.<br><em>Vivo.</em>
-      </div>
-      <div class="rule" style="background:var(--argila);"></div>
-      <p class="body">
-        Santo Xêro nasce do encontro entre saberes antigos e a força dos óleos vegetais ancestrais — uma linha que carrega memória, intenção e verdade em cada gota.
-      </p>
-      <span class="ornament-leaf">🌿</span>
-    </div>
-
-    <!-- SLIDE 3 — ÓLEOS ANCESTRAIS -->
-    <div class="slide slide-3">
-      <span class="slide-num" style="color:var(--areia);opacity:0.4;">03 / 06</span>
-      <div class="big-word">óleos</div>
-      <div class="content">
-        <span class="eyebrow">ingredientes</span>
-        <div class="rule" style="background:var(--areia);opacity:0.2;"></div>
-        <div class="heading">
-          Óleos <strong>ancestrais</strong><br>ervas de uso<br>tradicional
-        </div>
-        <div class="items">
-          <div class="item"><span class="item-dot"></span><span>Óleos vegetais de extração cuidadosa e origem rastreada</span></div>
-          <div class="item"><span class="item-dot"></span><span>Ervas de uso tradicional e popular</span></div>
-          <div class="item"><span class="item-dot"></span><span>Saberes passados de geração em geração</span></div>
-          <div class="item"><span class="item-dot"></span><span>Formulação com intenção, não com pressa</span></div>
+        <span class="ig-num" style="color:#7EC8A8;opacity:0.4;">03</span>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:9px;position:relative;z-index:1;">
+          <span class="ig-eyebrow" style="color:#7EC8A8;">frequência vibracional</span>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;text-align:center;line-height:1.05;color:#E8F4F0;"><em style="font-style:italic;color:#7EC8A8;">Energia</em><br>que<br><span style="color:#7EC8A8;">transforma</span></div>
+          <div class="ig-rule" style="background:#7EC8A8;"></div>
+          <p style="font-size:13px;line-height:1.7;text-align:center;color:rgba(232,244,240,0.75);max-width:190px;margin:0 auto;">Trabalhados com frequências vibracionais para elevar seu bem-estar de dentro para fora.</p>
+          <span style="background:rgba(126,200,168,0.12);border:0.6px solid rgba(126,200,168,0.3);color:#7EC8A8;font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.28em;padding:5px 14px;border-radius:40px;">vibração · intenção</span>
         </div>
       </div>
-    </div>
 
-    <!-- SLIDE 4 — BANHOS DE ERVAS -->
-    <div class="slide slide-4">
-      <span class="slide-num" style="color:var(--areia);opacity:0.4;">04 / 06</span>
-      <div class="circle-bg"></div>
-      <div class="circle-bg-2"></div>
-      <div class="number">∞</div>
-      <div class="content">
-        <span class="eyebrow">ritual</span>
-        <div class="heading">
-          Banhos de<br><em>ervas</em>
+      <div class="ig-card ig4" onclick="openModal(3)">
+        <div style="position:absolute;font-family:'Cormorant Garamond',serif;font-size:110px;font-weight:300;font-style:italic;color:rgba(200,169,122,0.07);top:8px;right:8px;line-height:1;pointer-events:none;">∞</div>
+        <span class="ig-num" style="color:#C8A97A;opacity:0.4;">04</span>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:9px;position:relative;z-index:1;">
+          <span class="ig-eyebrow" style="color:#C8A97A;">cuidado integral</span>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;text-align:center;line-height:1.05;">Por <em style="font-style:italic;color:#C8A97A;">dentro</em><br>e por <em style="font-style:italic;color:#C8A97A;">fora</em></div>
+          <div class="ig-rule" style="background:#C8A97A;"></div>
+          <p style="font-size:13px;line-height:1.7;text-align:center;color:rgba(245,237,216,0.75);max-width:190px;margin:0 auto;">Produtos naturais que cuidam do corpo e da energia com a sabedoria das plantas.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;">
+            <span style="background:rgba(200,169,122,0.1);border:0.6px solid rgba(200,169,122,0.25);color:#C8A97A;font-family:'Cinzel',serif;font-size:7px;letter-spacing:0.22em;padding:4px 12px;border-radius:40px;">CORPO</span>
+            <span style="background:rgba(200,169,122,0.1);border:0.6px solid rgba(200,169,122,0.25);color:#C8A97A;font-family:'Cinzel',serif;font-size:7px;letter-spacing:0.22em;padding:4px 12px;border-radius:40px;">MENTE</span>
+            <span style="background:rgba(200,169,122,0.1);border:0.6px solid rgba(200,169,122,0.25);color:#C8A97A;font-family:'Cinzel',serif;font-size:7px;letter-spacing:0.22em;padding:4px 12px;border-radius:40px;">ESPÍRITO</span>
+          </div>
         </div>
-        <div class="rule" style="background:var(--areia);opacity:0.2;width:40px;height:1px;"></div>
-        <p class="body">
-          Não é higiene — é ritual.<br>Cada banho carrega a memória das plantas e a intenção de quem cuida.
-        </p>
-        <span class="tag-pill">sabedoria ancestral</span>
       </div>
-    </div>
 
-    <!-- SLIDE 5 — NÃO É COSMÉTICO VERDE -->
-    <div class="slide slide-5">
-      <span class="slide-num" style="color:var(--terra);opacity:0.4;">05 / 06</span>
-      <div class="big-no">não.</div>
-      <div class="content">
-        <span class="eyebrow">posicionamento</span>
-        <div class="heading">
-          Não é cosmético<br>verde <em>genérico</em>
+      <div class="ig-card ig5" onclick="openModal(4)">
+        <div style="position:absolute;font-family:'Cormorant Garamond',serif;font-size:100px;font-weight:300;font-style:italic;color:rgba(30,18,8,0.07);top:10px;left:-4px;pointer-events:none;">não.</div>
+        <span class="ig-num" style="color:#1E1208;opacity:0.35;">05</span>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;position:relative;z-index:1;">
+          <span class="ig-eyebrow" style="color:#3B2810;opacity:0.7;">posicionamento</span>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;line-height:1.15;text-align:center;color:#1E1208;">Não é cosmético<br>verde <em style="font-style:italic;">genérico</em></div>
+          <div style="display:flex;align-items:center;gap:8px;max-width:200px;width:100%;">
+            <div style="flex:1;height:0.6px;background:rgba(30,18,8,0.22);"></div>
+            <span style="font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.22em;color:rgba(30,18,8,0.5);">mas sim</span>
+            <div style="flex:1;height:0.6px;background:rgba(30,18,8,0.22);"></div>
+          </div>
+          <p style="font-style:italic;font-size:17px;line-height:1.55;text-align:center;max-width:200px;color:#1E1208;font-family:'Cormorant Garamond',serif;">"Botânica com alma.<br>Raiz, equilíbrio<br>e verdade."</p>
         </div>
-        <div class="divider"><span>mas sim</span></div>
-        <p class="afirmacao">
-          "Botânica com alma.<br>Santo Xêro é raiz —<br>equilíbrio e verdade."
-        </p>
+      </div>
+
+      <div class="ig-card ig6" onclick="openModal(5)">
+        <span class="ig-num" style="color:#8EC8A0;opacity:0.4;">06</span>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:12px;position:relative;z-index:1;">
+          <span class="ig-eyebrow" style="color:#8EC8A0;">manifesto</span>
+          <div style="width:32px;height:0.7px;background:#8EC8A0;opacity:0.25;margin:0 auto;"></div>
+          <p style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:300;line-height:1.8;text-align:center;max-width:200px;color:rgba(216,237,216,0.9);">
+            Não estamos aqui<br>para parecer natural.<br><br>
+            Estamos para ser <strong style="color:#8EC8A0;font-weight:400;">raiz</strong>,<br>
+            vibrar em <strong style="color:#8EC8A0;font-weight:400;">equilíbrio</strong><br>
+            e guardar a <strong style="color:#8EC8A0;font-weight:400;">verdade</strong>.
+          </p>
+          <div style="width:32px;height:0.7px;background:#8EC8A0;opacity:0.25;margin:0 auto;"></div>
+          <span style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.3em;color:#8EC8A0;">Santo Xêro</span>
+          <span style="font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:10px;color:rgba(142,200,160,0.45);letter-spacing:0.1em;">botânica com alma</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── SEÇÃO 3: FRASES ─── -->
+  <section class="section" id="sec-frases">
+    <div class="sec-header">
+      <span class="sec-eyebrow">copy · conteúdo</span>
+      <h1 class="sec-title">Banco de <em>Frases</em></h1>
+      <div class="sec-rule"></div>
+      <p class="sec-sub">clique em "copiar" e cole direto no Instagram</p>
+    </div>
+
+    <div class="frases-tabs">
+      <button class="ftab on" onclick="showFrases('identidade')">Identidade</button>
+      <button class="ftab" onclick="showFrases('oleos')">Óleos</button>
+      <button class="ftab" onclick="showFrases('vibracional')">Vibracional</button>
+      <button class="ftab" onclick="showFrases('ritual')">Ritual &amp; Banho</button>
+      <button class="ftab" onclick="showFrases('legendas')">Legendas Completas</button>
+    </div>
+
+    <!-- Identidade -->
+    <div class="frases-panel on" id="fp-identidade">
+      <div class="frases-grid">
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Não cuidamos da pele. Cuidamos da alma que a habita.')">copiar</button>
+          <span class="frase-tag">identidade</span>
+          <p class="frase-texto">"Não cuidamos da pele. Cuidamos da alma que a habita."</p>
+          <p class="frase-nota">Use como abertura de post de apresentação ou no Stories com fundo escuro.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Natural não é moda. É raiz. É Santo Xêro.')">copiar</button>
+          <span class="frase-tag">posicionamento</span>
+          <p class="frase-texto">"Natural não é moda. É raiz. É Santo Xêro."</p>
+          <p class="frase-nota">Forte para Reels de apresentação ou pinned post do perfil.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Somos botânica com alma. Nem mais, nem menos.')">copiar</button>
+          <span class="frase-tag">manifesto</span>
+          <p class="frase-texto">"Somos botânica com alma. Nem mais, nem menos."</p>
+          <p class="frase-nota">Ideal para carrossel de apresentação de marca no início do mês.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Cada produto nasce de uma intenção. A sua: cuidar de verdade.')">copiar</button>
+          <span class="frase-tag">valor</span>
+          <p class="frase-texto">"Cada produto nasce de uma intenção. A sua: cuidar de verdade."</p>
+          <p class="frase-nota">Perfeita para foto do produto com luz natural, tom intimista.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'A terra não tem pressa. Nossas fórmulas, também não.')">copiar</button>
+          <span class="frase-tag">processo</span>
+          <p class="frase-texto">"A terra não tem pressa. Nossas fórmulas, também não."</p>
+          <p class="frase-nota">Ótima para posts de bastidores mostrando o processo de produção.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Você não precisa de mais produtos. Precisa dos certos.')">copiar</button>
+          <span class="frase-tag">diferencial</span>
+          <p class="frase-texto">"Você não precisa de mais produtos. Precisa dos certos."</p>
+          <p class="frase-nota">Use em posts de comparação ou quando apresentar um produto específico.</p>
+        </div>
       </div>
     </div>
 
-    <!-- SLIDE 6 — MANIFESTO FINAL -->
-    <div class="slide slide-6">
-      <span class="slide-num">06 / 06</span>
-      <div class="top">
-        <span class="eyebrow">manifesto</span>
-        <div class="rule" style="background:var(--areia);opacity:0.2;width:40px;height:1px;"></div>
-      </div>
-
-      <div class="mid">
-        <p class="manifesto">
-          Não estamos aqui<br>para parecer natural.<br>
-          Estamos aqui para ser <strong>raiz</strong>.<br><br>
-          Para trazer o <strong>equilíbrio</strong><br>que só a terra conhece<br>
-          e a <strong>verdade</strong><br>que só o sagrado guarda.
-        </p>
-      </div>
-
-      <div class="bottom">
-        <div class="rule" style="background:var(--areia);opacity:0.2;width:40px;height:1px;"></div>
-        <span class="brand-final">Santo Xêro</span>
-        <span class="tagline-final">botânica com alma</span>
+    <!-- Óleos -->
+    <div class="frases-panel" id="fp-oleos">
+      <div class="frases-grid">
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'A terra já sabe o que seu corpo precisa. Nós apenas escutamos.')">copiar</button>
+          <span class="frase-tag">óleos vegetais</span>
+          <p class="frase-texto">"A terra já sabe o que seu corpo precisa. Nós apenas escutamos."</p>
+          <p class="frase-nota">Combine com foto macro do óleo ou ingrediente.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Cada óleo tem uma memória. A da planta. A da terra. A do cuidado.')">copiar</button>
+          <span class="frase-tag">ingredientes</span>
+          <p class="frase-texto">"Cada óleo tem uma memória. A da planta. A da terra. A do cuidado."</p>
+          <p class="frase-nota">Ótima para posts educativos sobre ingredientes específicos.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Óleo vegetal puro não é luxo. É o mínimo que sua pele merece.')">copiar</button>
+          <span class="frase-tag">valor percebido</span>
+          <p class="frase-texto">"Óleo vegetal puro não é luxo. É o mínimo que sua pele merece."</p>
+          <p class="frase-nota">Ideal para rebater objeção de preço sem citar preço.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Avó sabia. A planta sabia. Agora você sabe também.')">copiar</button>
+          <span class="frase-tag">ancestralidade</span>
+          <p class="frase-texto">"Avó sabia. A planta sabia. Agora você sabe também."</p>
+          <p class="frase-nota">Perfeita para posts de ingredientes tradicionais (andiroba, babaçu, etc.).</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Sem silicone. Sem enchimento. Só o que a planta dá.')">copiar</button>
+          <span class="frase-tag">pureza</span>
+          <p class="frase-texto">"Sem silicone. Sem enchimento. Só o que a planta dá."</p>
+          <p class="frase-nota">Use em posts de transparência sobre formulação.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Uma gota de óleo vegetal puro vale mais do que um frasco de promessa.')">copiar</button>
+          <span class="frase-tag">diferencial</span>
+          <p class="frase-texto">"Uma gota de óleo vegetal puro vale mais do que um frasco de promessa."</p>
+          <p class="frase-nota">Forte para Stories comparativos ou carrossel de ingredientes.</p>
+        </div>
       </div>
     </div>
 
-  </div><!-- /track -->
-</div><!-- /wrapper -->
+    <!-- Vibracional -->
+    <div class="frases-panel" id="fp-vibracional">
+      <div class="frases-grid">
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Cada gota carrega uma frequência. Cada frequência, uma intenção.')">copiar</button>
+          <span class="frase-tag">frequência</span>
+          <p class="frase-texto">"Cada gota carrega uma frequência. Cada frequência, uma intenção."</p>
+          <p class="frase-nota">Ideal para introduzir o conceito vibracional da marca.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Vibração não se vê — se sente. Assim como nossas fórmulas.')">copiar</button>
+          <span class="frase-tag">sensorial</span>
+          <p class="frase-texto">"Vibração não se vê — se sente. Assim como nossas fórmulas."</p>
+          <p class="frase-nota">Use com depoimento de cliente ou vídeo de aplicação do produto.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'O que você aplica na pele entra no seu campo energético. Escolha com consciência.')">copiar</button>
+          <span class="frase-tag">consciência</span>
+          <p class="frase-texto">"O que você aplica na pele entra no seu campo energético. Escolha com consciência."</p>
+          <p class="frase-nota">Post educativo poderoso sobre o diferencial da marca.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Ciência e ancestralidade não se opõem — se completam.')">copiar</button>
+          <span class="frase-tag">integração</span>
+          <p class="frase-texto">"Ciência e ancestralidade não se opõem — se completam."</p>
+          <p class="frase-nota">Ótima para rebater questionamentos sobre eficácia + energia.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Cuidar do corpo sem cuidar da energia é varrer o chão com a janela aberta.')">copiar</button>
+          <span class="frase-tag">holístico</span>
+          <p class="frase-texto">"Cuidar do corpo sem cuidar da energia é varrer o chão com a janela aberta."</p>
+          <p class="frase-nota">Frase disruptiva — ótima para parar o scroll em Reels.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Frequência alta não é esoterismo. É intenção aplicada à matéria.')">copiar</button>
+          <span class="frase-tag">explicação</span>
+          <p class="frase-texto">"Frequência alta não é esoterismo. É intenção aplicada à matéria."</p>
+          <p class="frase-nota">Use para educação do público sobre o processo vibracional.</p>
+        </div>
+      </div>
+    </div>
 
-<!-- Controles -->
-<div class="controls">
-  <button class="btn" id="prev">&#8592;</button>
-  <div class="dots" id="dots"></div>
-  <button class="btn" id="next">&#8594;</button>
+    <!-- Ritual e Banho -->
+    <div class="frases-panel" id="fp-ritual">
+      <div class="frases-grid">
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Banho de ervas não limpa só o corpo — renova o campo.')">copiar</button>
+          <span class="frase-tag">banho de ervas</span>
+          <p class="frase-texto">"Banho de ervas não limpa só o corpo — renova o campo."</p>
+          <p class="frase-nota">Perfeita para vídeo de preparo de banho de ervas em slow motion.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Não é higiene. É ritual. E rituais pedem presença.')">copiar</button>
+          <span class="frase-tag">ritual</span>
+          <p class="frase-texto">"Não é higiene. É ritual. E rituais pedem presença."</p>
+          <p class="frase-nota">Use com conteúdo de como incorporar o banho como prática consciente.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Cuidar-se é um ato sagrado. Comece pela pele, chegue à essência.')">copiar</button>
+          <span class="frase-tag">autocuidado sagrado</span>
+          <p class="frase-texto">"Cuidar-se é um ato sagrado. Comece pela pele, chegue à essência."</p>
+          <p class="frase-nota">Frase âncora — pode ser usada em qualquer formato de conteúdo.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'As plantas guardam o que a ciência ainda está descobrindo.')">copiar</button>
+          <span class="frase-tag">sabedoria</span>
+          <p class="frase-texto">"As plantas guardam o que a ciência ainda está descobrindo."</p>
+          <p class="frase-nota">Ótima para carrossel educativo sobre ervas tradicionais.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'O que entra em equilíbrio por fora, ressoa em paz por dentro.')">copiar</button>
+          <span class="frase-tag">equilíbrio</span>
+          <p class="frase-texto">"O que entra em equilíbrio por fora, ressoa em paz por dentro."</p>
+          <p class="frase-nota">Use em posts de rotina de cuidado noturno ou antes de dormir.</p>
+        </div>
+        <div class="frase-card">
+          <button class="copy-pill" onclick="copiar(this,'Cada erva tem uma história. No banho, você entra nessa história.')">copiar</button>
+          <span class="frase-tag">conexão</span>
+          <p class="frase-texto">"Cada erva tem uma história. No banho, você entra nessa história."</p>
+          <p class="frase-nota">Ideal para apresentar um produto específico de banho de ervas.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legendas Completas -->
+    <div class="frases-panel" id="fp-legendas">
+      <div class="frases-grid">
+        <div class="frase-card" style="grid-column: span 2;">
+          <button class="copy-pill" onclick="copiar(this,'\"Não inventamos nada. Apenas lembramos.\"\n\nSanto Xêro nasce do que a terra sempre soube. Óleos vegetais selecionados, trabalhados com frequências vibracionais para cuidar de você por dentro e por fora.\n\nCada frasco é uma intenção. Cada gota, um ritual.\n\nConheça nossa linha completa. Link na bio. 🌿\n\n#santoxero #botanicacomalma #oleosvegetais #frequenciavibracional #cuidadonatural')">copiar</button>
+          <span class="frase-tag">lançamento · apresentação da marca</span>
+          <p class="frase-texto">"Não inventamos nada. Apenas lembramos."</p>
+          <p class="frase-nota" style="font-size:14px;line-height:1.75;color:rgba(240,230,208,0.65);">
+            Santo Xêro nasce do que a terra sempre soube. Óleos vegetais selecionados, trabalhados com frequências vibracionais para cuidar de você por dentro e por fora.<br><br>
+            Cada frasco é uma intenção. Cada gota, um ritual.<br><br>
+            Conheça nossa linha completa. Link na bio. 🌿
+          </p>
+        </div>
+        <div class="frase-card" style="grid-column: span 2;">
+          <button class="copy-pill" onclick="copiar(this,'\"Seu banho pode ser higiene — ou pode ser ritual.\"\n\nCom as ervas certas e a intenção certa, a água carrega mais do que você imagina.\n\nNosso blend de banho foi formulado para limpar o que o olho não vê. Para renovar o campo. Para te trazer de volta a você.\n\nRitual ou hábito? Você escolhe. Mas uma vez que você sente a diferença, não dá pra voltar. ✨\n\n#banhodeervas #ritualdecuidado #santoxero #energialimpa #autocuidadosagrado')">copiar</button>
+          <span class="frase-tag">produto · banho de ervas</span>
+          <p class="frase-texto">"Seu banho pode ser higiene — ou pode ser ritual."</p>
+          <p class="frase-nota" style="font-size:14px;line-height:1.75;color:rgba(240,230,208,0.65);">
+            Com as ervas certas e a intenção certa, a água carrega mais do que você imagina.<br><br>
+            Nosso blend de banho foi formulado para limpar o que o olho não vê. Para renovar o campo. Para te trazer de volta a você.<br><br>
+            Ritual ou hábito? Você escolhe. Mas uma vez que você sente a diferença, não dá pra voltar. ✨
+          </p>
+        </div>
+        <div class="frase-card" style="grid-column: span 2;">
+          <button class="copy-pill" onclick="copiar(this,'\"Cuidar de você é cuidar de tudo que você é.\"\n\nNossa linha de óleos vegetais naturais foi criada para quem entende que bem-estar não começa na aparência — começa na intenção.\n\nCada produto é formulado com óleos de origem rastreada e trabalhado com frequências vibracionais energéticas. Porque o que você coloca no corpo importa. E o campo energético ao redor do corpo, também.\n\nCorpo. Mente. Espírito. Tudo junto.\n\nSanto Xêro. Botânica com alma. 🌱\n\n#oleovegetal #cuidadoholistico #frequenciavibratoria #santoxero #autoamor')">copiar</button>
+          <span class="frase-tag">frequência vibracional · educativo</span>
+          <p class="frase-texto">"Cuidar de você é cuidar de tudo que você é."</p>
+          <p class="frase-nota" style="font-size:14px;line-height:1.75;color:rgba(240,230,208,0.65);">
+            Nossa linha de óleos vegetais naturais foi criada para quem entende que bem-estar não começa na aparência — começa na intenção.<br><br>
+            Cada produto é formulado com óleos de origem rastreada e trabalhado com frequências vibracionais energéticas. Porque o que você coloca no corpo importa.<br><br>
+            Corpo. Mente. Espírito. Tudo junto. Santo Xêro. Botânica com alma. 🌱
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SEÇÃO 4: PROMPTS IA ─── -->
+  <section class="section" id="sec-prompts">
+    <div class="sec-header">
+      <span class="sec-eyebrow">inteligência artificial</span>
+      <h1 class="sec-title">Prompts <em>Prontos</em></h1>
+      <div class="sec-rule"></div>
+      <p class="sec-sub">cole no Claude, ChatGPT ou qualquer IA · substitua o que está em verde</p>
+    </div>
+
+    <div class="prompts-list">
+
+      <div class="prompt-card">
+        <div class="prompt-head" onclick="togglePrompt(this)">
+          <div class="prompt-icon">✍️</div>
+          <div class="prompt-meta">
+            <p class="prompt-titulo">CRIAR POST DO ZERO</p>
+            <p class="prompt-desc">Gera post completo com abertura, corpo e CTA</p>
+          </div>
+          <span class="prompt-chevron">▼</span>
+        </div>
+        <div class="prompt-body">
+          <div class="prompt-tags">
+            <span class="p-tag">FEED</span><span class="p-tag">REELS</span><span class="p-tag">CARROSSEL</span>
+          </div>
+          <div class="prompt-box">
+            <button class="prompt-copy" onclick="copiarPrompt(this, 0)">copiar</button>
+            Você é um copywriter especialista em marcas de bem-estar, cosmética natural e espiritualidade. Escreva um post para o Instagram da marca <strong>Santo Xêro</strong> — uma linha de produtos feita com óleos vegetais naturais trabalhados com frequências vibracionais energéticas. A marca tem estética botânica, ancestral e sagrada.<br><br>
+            Tom: poético, íntimo, com autoridade espiritual. Evite clichês de "natural" e "orgânico". Use linguagem sensorial e ritualística.<br><br>
+            O post deve ter: frase de abertura impactante (máx. 10 palavras) · corpo com 3–4 parágrafos curtos · call to action suave · 10 hashtags relevantes.<br><br>
+            Tema do post: <span class="placeholder">[DESCREVA O PRODUTO OU TEMA — ex: óleo de rosa mosqueta, banho de ervas, rotina noturna]</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-head" onclick="togglePrompt(this)">
+          <div class="prompt-icon">🎬</div>
+          <div class="prompt-meta">
+            <p class="prompt-titulo">LEGENDA PARA REEL / VÍDEO</p>
+            <p class="prompt-desc">Otimizada para parar scroll e gerar salvamentos</p>
+          </div>
+          <span class="prompt-chevron">▼</span>
+        </div>
+        <div class="prompt-body">
+          <div class="prompt-tags">
+            <span class="p-tag">REELS</span><span class="p-tag">TIKTOK</span><span class="p-tag">STORIES</span>
+          </div>
+          <div class="prompt-box">
+            <button class="prompt-copy" onclick="copiarPrompt(this, 1)">copiar</button>
+            Crie uma legenda para um Reel do Instagram da <strong>Santo Xêro</strong>. O vídeo mostra <span class="placeholder">[DESCREVA O CONTEÚDO DO VÍDEO — ex: mãos aplicando óleo ao amanhecer, ervas secando, ritual de banho com velas]</span>.<br><br>
+            A legenda deve:<br>
+            — Começar com uma pergunta ou afirmação que para o scroll<br>
+            — Ter de 4 a 6 linhas de texto<br>
+            — Usar no máximo 1 emoji<br>
+            — Terminar com CTA suave (salva, comenta, testa)<br>
+            — Incluir 8 hashtags nicho ao final<br><br>
+            Estilo: sagrado, botânico, vibracional. Sem tom de venda direta.
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-head" onclick="togglePrompt(this)">
+          <div class="prompt-icon">📅</div>
+          <div class="prompt-meta">
+            <p class="prompt-titulo">CALENDÁRIO DE 7 POSTS</p>
+            <p class="prompt-desc">Uma semana de conteúdo planejado com formatos e horários</p>
+          </div>
+          <span class="prompt-chevron">▼</span>
+        </div>
+        <div class="prompt-body">
+          <div class="prompt-tags">
+            <span class="p-tag">PLANEJAMENTO</span><span class="p-tag">SEMANA</span>
+          </div>
+          <div class="prompt-box">
+            <button class="prompt-copy" onclick="copiarPrompt(this, 2)">copiar</button>
+            Crie um calendário de conteúdo para 7 posts no Instagram da <strong>Santo Xêro</strong> para a próxima semana. Para cada dia, gere:<br>
+            — Tema do post<br>
+            — Formato (foto, reels, carrossel, stories)<br>
+            — Frase de abertura<br>
+            — Legenda curta (máx. 4 linhas)<br>
+            — Melhor horário para publicar<br>
+            — 5 hashtags<br><br>
+            Alternar entre: educativo (óleos e ervas) · ritual/prático (como usar) · filosófico/espiritual (autocuidado e frequências) · bastidores/humanização.<br><br>
+            Tom: botânico, ancestral, sagrado, vibracional. Nunca soar como propaganda.<br><br>
+            Produto em destaque esta semana: <span class="placeholder">[NOME DO PRODUTO OU "linha completa"]</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-head" onclick="togglePrompt(this)">
+          <div class="prompt-icon">💬</div>
+          <div class="prompt-meta">
+            <p class="prompt-titulo">RESPONDER COMENTÁRIOS E DMs</p>
+            <p class="prompt-desc">Atendimento com a voz autêntica da marca</p>
+          </div>
+          <span class="prompt-chevron">▼</span>
+        </div>
+        <div class="prompt-body">
+          <div class="prompt-tags">
+            <span class="p-tag">ATENDIMENTO</span><span class="p-tag">DM</span><span class="p-tag">COMENTÁRIOS</span>
+          </div>
+          <div class="prompt-box">
+            <button class="prompt-copy" onclick="copiarPrompt(this, 3)">copiar</button>
+            Você é o atendimento da <strong>Santo Xêro</strong>, marca de produtos naturais vibracionais. Responda a mensagem abaixo com tom acolhedora, autêntico e alinhado à marca (espiritual, botânico, amoroso — nunca corporativo).<br><br>
+            Se for dúvida sobre produto: responda com clareza e indique benefícios naturais.<br>
+            Se for elogio: agradeça com profundidade, não com "obrigada ❤️".<br>
+            Se for reclamação: acolha primeiro, solucione depois. Nunca seja defensivo.<br>
+            Se for curiosidade: eduque sobre óleos vegetais ou frequências vibracionais.<br><br>
+            Mensagem recebida: <span class="placeholder">[COLE A MENSAGEM AQUI]</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-head" onclick="togglePrompt(this)">
+          <div class="prompt-icon">🔬</div>
+          <div class="prompt-meta">
+            <p class="prompt-titulo">POST EDUCATIVO SOBRE INGREDIENTE</p>
+            <p class="prompt-desc">Explica um óleo ou erva de forma acessível e encantadora</p>
+          </div>
+          <span class="prompt-chevron">▼</span>
+        </div>
+        <div class="prompt-body">
+          <div class="prompt-tags">
+            <span class="p-tag">CARROSSEL</span><span class="p-tag">EDUCATIVO</span><span class="p-tag">FEED</span>
+          </div>
+          <div class="prompt-box">
+            <button class="prompt-copy" onclick="copiarPrompt(this, 4)">copiar</button>
+            Crie um carrossel educativo de 5 slides para o Instagram da <strong>Santo Xêro</strong> sobre o ingrediente: <span class="placeholder">[NOME DO INGREDIENTE — ex: óleo de pracaxi, calêndula, erva cidreira]</span>.<br><br>
+            Para cada slide escreva um título curto (máx. 6 palavras) e um texto de até 3 linhas. Estrutura sugerida:<br>
+            Slide 1: Frase de abertura impactante sobre o ingrediente<br>
+            Slide 2: De onde vem / origem ancestral<br>
+            Slide 3: O que faz pela pele ou pelo corpo<br>
+            Slide 4: O que faz pela energia / campo vibracional<br>
+            Slide 5: Como usar + CTA para o produto<br><br>
+            Tom: poético e informativo. Cite sabedoria popular junto à informação técnica. Finalize com legenda completa para o post.
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-head" onclick="togglePrompt(this)">
+          <div class="prompt-icon">🌟</div>
+          <div class="prompt-meta">
+            <p class="prompt-titulo">BIO DO INSTAGRAM</p>
+            <p class="prompt-desc">3 versões de bio que convertem visitante em seguidor</p>
+          </div>
+          <span class="prompt-chevron">▼</span>
+        </div>
+        <div class="prompt-body">
+          <div class="prompt-tags">
+            <span class="p-tag">PERFIL</span><span class="p-tag">BIO</span>
+          </div>
+          <div class="prompt-box">
+            <button class="prompt-copy" onclick="copiarPrompt(this, 5)">copiar</button>
+            Escreva 3 versões de bio para o Instagram da <strong>Santo Xêro</strong>.<br><br>
+            Sobre a marca: produtos de cuidado pessoal com óleos vegetais naturais e frequências vibracionais. Cuida de corpo, mente e espírito. Botânica ancestral.<br><br>
+            Requisitos por versão:<br>
+            — Máximo 150 caracteres<br>
+            — Incluir emoji de planta ou natureza<br>
+            — Mencionar o diferencial vibracional/natural<br>
+            — CTA claro (link na bio, conheça, explore)<br><br>
+            Tom: sofisticado, espiritual, acessível. Evite pontos de exclamação. Versão 1: mais poética. Versão 2: mais direta e proposta de valor. Versão 3: com pergunta que convida à reflexão.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── SEÇÃO 5: DICAS ─── -->
+  <section class="section" id="sec-dicas">
+    <div class="sec-header">
+      <span class="sec-eyebrow">estratégia</span>
+      <h1 class="sec-title">Dicas de <em>Postagem</em></h1>
+      <div class="sec-rule"></div>
+      <p class="sec-sub">estratégias validadas para marcas naturais e espirituais</p>
+    </div>
+
+    <div class="dicas-layout">
+
+      <div class="dica-bloco destaque">
+        <div class="dica-header">
+          <div class="dica-icone">🕐</div>
+          <div>
+            <p class="dica-titulo">Melhores horários para postar</p>
+            <p class="dica-subtitulo">Baseado no comportamento do público de bem-estar e autocuidado</p>
+          </div>
+        </div>
+        <div class="horario-grid">
+          <div class="horario-dia"><span class="h-dia">SEG</span><span class="h-hora">07h–09h<br>19h–21h</span><span class="h-tipo">feed</span></div>
+          <div class="horario-dia"><span class="h-dia">TER</span><span class="h-hora">12h–13h<br>20h–22h</span><span class="h-tipo">reels</span></div>
+          <div class="horario-dia"><span class="h-dia">QUA</span><span class="h-hora">07h–09h<br>18h–20h</span><span class="h-tipo">carrossel</span></div>
+          <div class="horario-dia"><span class="h-dia">QUI</span><span class="h-hora">19h–21h</span><span class="h-tipo">stories</span></div>
+          <div class="horario-dia"><span class="h-dia">SEX</span><span class="h-hora">11h–13h<br>20h–22h</span><span class="h-tipo">reels</span></div>
+          <div class="horario-dia"><span class="h-dia">SÁB</span><span class="h-hora">09h–11h<br>14h–16h</span><span class="h-tipo">feed</span></div>
+          <div class="horario-dia"><span class="h-dia">DOM</span><span class="h-hora">08h–10h<br>17h–19h</span><span class="h-tipo">ritual</span></div>
+        </div>
+      </div>
+
+      <div class="dica-bloco">
+        <div class="dica-header">
+          <div class="dica-icone">📸</div>
+          <div>
+            <p class="dica-titulo">Estética visual que vende</p>
+            <p class="dica-subtitulo">Para fotos e vídeos da Santo Xêro</p>
+          </div>
+        </div>
+        <ul class="dica-list">
+          <li><strong>Luz natural lateral</strong> — nunca flash. Manhã cedo ou fim de tarde.</li>
+          <li><strong>Texturas orgânicas</strong> de fundo: madeira, pedra, linho, terra.</li>
+          <li><strong>Elementos vivos</strong> junto ao produto: folhas, flores, ervas, galhos.</li>
+          <li>Sempre <strong>mãos humanas</strong> no frame — conecta emocionalmente.</li>
+          <li>Paleta: <strong>tons de terra, verde musgo, creme e ouro</strong>. Sem branco frio.</li>
+          <li>Vídeos em <strong>slow motion</strong> com óleo escorrendo ou ervas ao vento.</li>
+        </ul>
+      </div>
+
+      <div class="dica-bloco">
+        <div class="dica-header">
+          <div class="dica-icone">💡</div>
+          <div>
+            <p class="dica-titulo">Formatos que mais engajam</p>
+            <p class="dica-subtitulo">Tipos de conteúdo para crescer no Instagram</p>
+          </div>
+        </div>
+        <ul class="dica-list">
+          <li><strong>Carrossel educativo</strong> — "5 ervas que limpam o campo energético"</li>
+          <li><strong>Reel de ritual</strong> — mostra o passo a passo do banho de ervas</li>
+          <li><strong>Before/after energético</strong> — como a pessoa se sente antes e depois</li>
+          <li><strong>Bastidores</strong> — processo de produção com música ambiente</li>
+          <li><strong>Depoimento com frase</strong> — overlay de texto sobre vídeo do cliente</li>
+          <li><strong>Story interativo</strong> — caixinha: "me conta seu ritual de autocuidado"</li>
+        </ul>
+      </div>
+
+      <div class="dica-bloco">
+        <div class="dica-header">
+          <div class="dica-icone">📝</div>
+          <div>
+            <p class="dica-titulo">Estrutura de legenda que converte</p>
+            <p class="dica-subtitulo">Fórmula testada para marcas de bem-estar</p>
+          </div>
+        </div>
+        <ul class="dica-list">
+          <li><strong>Linha 1:</strong> Frase curta e impactante — para o scroll.</li>
+          <li><strong>Linha 2–4:</strong> Contexto emocional — a dor ou o desejo do cliente.</li>
+          <li><strong>Linha 5–7:</strong> A solução — como o produto resolve, sem exagero.</li>
+          <li><strong>Linha 8:</strong> Prova ou verdade — dado, ancestralidade ou depoimento.</li>
+          <li><strong>CTA:</strong> Suave e específico — "salva para o ritual de hoje à noite".</li>
+          <li><strong>Hashtags:</strong> 8–15 tags, mix de nicho e amplas. No comentário!</li>
+        </ul>
+      </div>
+
+      <div class="dica-bloco">
+        <div class="dica-header">
+          <div class="dica-icone">🌙</div>
+          <div>
+            <p class="dica-titulo">Temas sazonais e rituais</p>
+            <p class="dica-subtitulo">Conteúdo alinhado ao calendário sagrado e estações</p>
+          </div>
+        </div>
+        <ul class="dica-list">
+          <li><strong>Lua Nova</strong> — intenção, início, novos produtos, rituais de plantio.</li>
+          <li><strong>Lua Cheia</strong> — gratidão, limpeza energética, banho de ervas.</li>
+          <li><strong>Solstícios</strong> — conexão com a natureza, óleos de raiz e madeira.</li>
+          <li><strong>Equinócios</strong> — equilíbrio corpo–mente, produtos para harmonizar.</li>
+          <li><strong>Inverno</strong> — óleos mais densos, autocuidado, acolhimento.</li>
+          <li><strong>Verão</strong> — leveza, óleos secos, ritual de sol e proteção natural.</li>
+        </ul>
+      </div>
+
+      <div class="dica-bloco">
+        <div class="dica-header">
+          <div class="dica-icone">🚫</div>
+          <div>
+            <p class="dica-titulo">O que NÃO fazer</p>
+            <p class="dica-subtitulo">Erros que enfraquecem a marca no Instagram</p>
+          </div>
+        </div>
+        <ul class="dica-list">
+          <li>Nunca use <strong>fundo branco limpo</strong> — faz parecer cosmético genérico.</li>
+          <li>Evite <strong>emojis em excesso</strong> — um por legenda, no máximo dois.</li>
+          <li>Não poste <strong>foto de produto sem contexto</strong> — sempre com ambiente.</li>
+          <li>Nunca <strong>copie o tom de marcas de massa</strong> — sua voz é única.</li>
+          <li>Evite <strong>prometer resultados milagrosos</strong> — fala de sensação e intenção.</li>
+          <li>Não abandone a <strong>consistência visual</strong> — paleta e fonte são identidade.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── SEÇÃO 6: HASHTAGS ─── -->
+  <section class="section" id="sec-hashtags">
+    <div class="sec-header">
+      <span class="sec-eyebrow">alcance orgânico</span>
+      <h1 class="sec-title">Banco de <em>Hashtags</em></h1>
+      <div class="sec-rule"></div>
+      <p class="sec-sub">selecione as tags · copie o conjunto completo</p>
+    </div>
+
+    <div class="hash-grupos">
+
+      <div class="hash-grupo">
+        <div class="hash-titulo">
+          <span class="hash-label">IDENTIDADE DA MARCA</span>
+          <span class="hash-count">sempre usar</span>
+        </div>
+        <div class="hash-cloud" id="hg0">
+          <span class="htag" onclick="toggleHash(this)">#santoxero</span>
+          <span class="htag" onclick="toggleHash(this)">#botanicacomalma</span>
+          <span class="htag" onclick="toggleHash(this)">#oleosvegetais</span>
+          <span class="htag" onclick="toggleHash(this)">#frequenciavibracional</span>
+          <span class="htag" onclick="toggleHash(this)">#cuidadonatural</span>
+          <span class="htag" onclick="toggleHash(this)">#botanicasagrada</span>
+          <span class="htag" onclick="toggleHash(this)">#produtosnaturaisbrasil</span>
+          <span class="htag" onclick="toggleHash(this)">#oleovegetal</span>
+        </div>
+        <div class="hash-action">
+          <span class="hash-count-sel" id="cnt0">Clique nas tags para selecionar</span>
+          <button class="hash-copy-btn" onclick="copiarHashtags(0)">copiar selecionadas</button>
+        </div>
+      </div>
+
+      <div class="hash-grupo">
+        <div class="hash-titulo">
+          <span class="hash-label">AUTOCUIDADO E BEM-ESTAR</span>
+          <span class="hash-count">alto alcance</span>
+        </div>
+        <div class="hash-cloud" id="hg1">
+          <span class="htag" onclick="toggleHash(this)">#autocuidado</span>
+          <span class="htag" onclick="toggleHash(this)">#autocuidadosagrado</span>
+          <span class="htag" onclick="toggleHash(this)">#ritualdecuidado</span>
+          <span class="htag" onclick="toggleHash(this)">#bemestar</span>
+          <span class="htag" onclick="toggleHash(this)">#saudeholistica</span>
+          <span class="htag" onclick="toggleHash(this)">#vivernatural</span>
+          <span class="htag" onclick="toggleHash(this)">#rotinadebeleza</span>
+          <span class="htag" onclick="toggleHash(this)">#skincarenatura</span>
+          <span class="htag" onclick="toggleHash(this)">#belezaconsciente</span>
+          <span class="htag" onclick="toggleHash(this)">#cuidadocomapele</span>
+          <span class="htag" onclick="toggleHash(this)">#cosmecosnatural</span>
+          <span class="htag" onclick="toggleHash(this)">#belezanatural</span>
+        </div>
+        <div class="hash-action">
+          <span class="hash-count-sel" id="cnt1">Clique nas tags para selecionar</span>
+          <button class="hash-copy-btn" onclick="copiarHashtags(1)">copiar selecionadas</button>
+        </div>
+      </div>
+
+      <div class="hash-grupo">
+        <div class="hash-titulo">
+          <span class="hash-label">ESPIRITUAL E VIBRACIONAL</span>
+          <span class="hash-count">nicho fiel</span>
+        </div>
+        <div class="hash-cloud" id="hg2">
+          <span class="htag" onclick="toggleHash(this)">#energiavibracional</span>
+          <span class="htag" onclick="toggleHash(this)">#limpezaenergetica</span>
+          <span class="htag" onclick="toggleHash(this)">#campoenergético</span>
+          <span class="htag" onclick="toggleHash(this)">#banhodedescarrego</span>
+          <span class="htag" onclick="toggleHash(this)">#banhodeflor</span>
+          <span class="htag" onclick="toggleHash(this)">#espiritualidade</span>
+          <span class="htag" onclick="toggleHash(this)">#ritualdeervas</span>
+          <span class="htag" onclick="toggleHash(this)">#ancestralidade</span>
+          <span class="htag" onclick="toggleHash(this)">#medicinadaplanta</span>
+          <span class="htag" onclick="toggleHash(this)">#sabedoriaancestral</span>
+          <span class="htag" onclick="toggleHash(this)">#intenção</span>
+          <span class="htag" onclick="toggleHash(this)">#frequenciaalternativa</span>
+        </div>
+        <div class="hash-action">
+          <span class="hash-count-sel" id="cnt2">Clique nas tags para selecionar</span>
+          <button class="hash-copy-btn" onclick="copiarHashtags(2)">copiar selecionadas</button>
+        </div>
+      </div>
+
+      <div class="hash-grupo">
+        <div class="hash-titulo">
+          <span class="hash-label">ÓLEOS ESPECÍFICOS · INGREDIENTES</span>
+          <span class="hash-count">alta intenção de compra</span>
+        </div>
+        <div class="hash-cloud" id="hg3">
+          <span class="htag" onclick="toggleHash(this)">#oleodeandiroba</span>
+          <span class="htag" onclick="toggleHash(this)">#oleodemurumuru</span>
+          <span class="htag" onclick="toggleHash(this)">#oleodepracaxi</span>
+          <span class="htag" onclick="toggleHash(this)">#oleodebabacu</span>
+          <span class="htag" onclick="toggleHash(this)">#oleodemassagem</span>
+          <span class="htag" onclick="toggleHash(this)">#oleocorporal</span>
+          <span class="htag" onclick="toggleHash(this)">#calêndula</span>
+          <span class="htag" onclick="toggleHash(this)">#ervasmedicinais</span>
+          <span class="htag" onclick="toggleHash(this)">#plantasmedicinais</span>
+          <span class="htag" onclick="toggleHash(this)">#fitoterapia</span>
+          <span class="htag" onclick="toggleHash(this)">#aromaterapia</span>
+          <span class="htag" onclick="toggleHash(this)">#oleoderosamo</span>
+        </div>
+        <div class="hash-action">
+          <span class="hash-count-sel" id="cnt3">Clique nas tags para selecionar</span>
+          <button class="hash-copy-btn" onclick="copiarHashtags(3)">copiar selecionadas</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── SEÇÃO 7: CALENDÁRIO ─── -->
+  <section class="section" id="sec-calendario">
+    <div class="sec-header">
+      <span class="sec-eyebrow">planejamento semanal</span>
+      <h1 class="sec-title">Calendário <em>Editorial</em></h1>
+      <div class="sec-rule"></div>
+      <p class="sec-sub">estrutura de conteúdo para os 7 dias da semana</p>
+    </div>
+
+    <div class="cal-semana">
+
+      <div class="cal-dia">
+        <span class="cal-dia-nome">Segunda</span>
+        <span class="cal-formato f-carrossel">carrossel</span>
+        <p class="cal-tema">Educativo sobre ingrediente ou óleo</p>
+        <p class="cal-frase">"5 coisas que o óleo de [X] faz pelo seu corpo e pela sua energia"</p>
+        <span class="cal-hora">07h–09h</span>
+      </div>
+
+      <div class="cal-dia">
+        <span class="cal-dia-nome">Terça</span>
+        <span class="cal-formato f-stories">stories</span>
+        <p class="cal-tema">Bastidores + caixinha de dúvidas</p>
+        <p class="cal-frase">"Como você se sente depois de usar produtos com intenção?" — caixinha aberta</p>
+        <span class="cal-hora">12h–13h</span>
+      </div>
+
+      <div class="cal-dia">
+        <span class="cal-dia-nome">Quarta</span>
+        <span class="cal-formato f-reels">reels</span>
+        <p class="cal-tema">Ritual de banho de ervas ou aplicação de óleo</p>
+        <p class="cal-frase">"O que muda quando você transforma um hábito em ritual"</p>
+        <span class="cal-hora">18h–20h</span>
+      </div>
+
+      <div class="cal-dia">
+        <span class="cal-dia-nome">Quinta</span>
+        <span class="cal-formato f-feed">feed · foto</span>
+        <p class="cal-tema">Produto com contexto visual rico</p>
+        <p class="cal-frase">"Cada frasco é uma intenção. O que você quer cultivar esta semana?"</p>
+        <span class="cal-hora">19h–21h</span>
+      </div>
+
+      <div class="cal-dia">
+        <span class="cal-dia-nome">Sexta</span>
+        <span class="cal-formato f-reels">reels</span>
+        <p class="cal-tema">Vibracional — campo energético e frequências</p>
+        <p class="cal-frase">"O que você coloca na pele importa. E a frequência do que você usa, também."</p>
+        <span class="cal-hora">20h–22h</span>
+      </div>
+
+      <div class="cal-dia">
+        <span class="cal-dia-nome">Sábado</span>
+        <span class="cal-formato f-carrossel">carrossel</span>
+        <p class="cal-tema">Depoimento real + como usar o produto</p>
+        <p class="cal-frase">"Quando o produto faz sentido, o corpo responde"</p>
+        <span class="cal-hora">09h–11h</span>
+      </div>
+
+      <div class="cal-dia">
+        <span class="cal-dia-nome">Domingo</span>
+        <span class="cal-formato f-feed">feed · ritual</span>
+        <p class="cal-tema">Manifesto · reflexão semanal</p>
+        <p class="cal-frase">"Domingo é dia de preparar o campo para a semana. Qual é o seu ritual?"</p>
+        <span class="cal-hora">08h–10h</span>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ══════════════ MODAL ══════════════ -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div style="position:relative;">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-card-wrap" id="modalCard"></div>
+  </div>
+  <div class="modal-nav">
+    <button class="modal-btn" onclick="navModal(-1);event.stopPropagation()">←</button>
+    <span class="modal-label" id="modalLabel">01 / 06</span>
+    <button class="modal-btn" onclick="navModal(1);event.stopPropagation()">→</button>
+  </div>
 </div>
 
-<p class="hint">← deslize ou use as setas →</p>
+<!-- ══════════════ TOAST ══════════════ -->
+<div class="toast" id="toast">COPIADO</div>
 
 <script>
-  const track = document.getElementById('track');
-  const dotsContainer = document.getElementById('dots');
-  const slides = document.querySelectorAll('.slide');
-  const total = slides.length;
-  let current = 0;
+/* ── NAV SECTIONS ── */
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo(0, 0);
+}
 
-  // criar dots
-  slides.forEach((_, i) => {
-    const d = document.createElement('button');
-    d.className = 'dot' + (i === 0 ? ' active' : '');
-    d.addEventListener('click', () => goTo(i));
-    dotsContainer.appendChild(d);
+/* ── CARROSSEL ── */
+const track = document.getElementById('track');
+const dotsC = document.getElementById('dots');
+const slides = document.querySelectorAll('.slide');
+let cur = 0;
+
+slides.forEach((_, i) => {
+  const d = document.createElement('button');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.addEventListener('click', () => goTo(i));
+  dotsC.appendChild(d);
+});
+
+function goTo(n) {
+  cur = (n + slides.length) % slides.length;
+  track.style.transform = `translateX(-${cur * slides[0].offsetWidth}px)`;
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+}
+
+document.getElementById('prev').addEventListener('click', () => goTo(cur - 1));
+document.getElementById('next').addEventListener('click', () => goTo(cur + 1));
+
+let sx = 0;
+track.addEventListener('touchstart', e => { sx = e.touches[0].clientX; });
+track.addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) goTo(cur + (dx < 0 ? 1 : -1)); });
+document.addEventListener('keydown', e => { if (e.key === 'ArrowRight') goTo(cur + 1); if (e.key === 'ArrowLeft') goTo(cur - 1); });
+window.addEventListener('resize', () => goTo(cur));
+
+/* ── MODAL CARDS IG ── */
+const igCards = document.querySelectorAll('.ig-card');
+let mIdx = 0;
+
+function openModal(i) {
+  mIdx = i;
+  renderModal();
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modal')) document.getElementById('modal').classList.remove('open');
+}
+
+function navModal(d) { mIdx = (mIdx + d + igCards.length) % igCards.length; renderModal(); }
+
+function renderModal() {
+  const mc = document.getElementById('modalCard');
+  const cl = igCards[mIdx].cloneNode(true);
+  cl.style.cssText = 'width:100%;height:100%;cursor:default;';
+  cl.onclick = null;
+  mc.innerHTML = '';
+  mc.appendChild(cl);
+  document.getElementById('modalLabel').textContent = String(mIdx + 1).padStart(2,'0') + ' / ' + String(igCards.length).padStart(2,'0');
+}
+
+/* ── FRASES TABS ── */
+function showFrases(id) {
+  document.querySelectorAll('.frases-panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.ftab').forEach(t => t.classList.remove('on'));
+  document.getElementById('fp-' + id).classList.add('on');
+  event.currentTarget.classList.add('on');
+}
+
+/* ── PROMPTS ACCORDION ── */
+function togglePrompt(head) {
+  const card = head.closest('.prompt-card');
+  card.classList.toggle('open');
+}
+
+/* ── COPY ── */
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+function copiar(btn, txt) {
+  navigator.clipboard.writeText(txt).then(() => {
+    btn.textContent = '✓ ok';
+    btn.classList.add('ok');
+    showToast();
+    setTimeout(() => { btn.textContent = 'copiar'; btn.classList.remove('ok'); }, 2000);
   });
+}
 
-  function goTo(n) {
-    current = (n + total) % total;
-    const slideW = slides[0].offsetWidth;
-    track.style.transform = `translateX(-${current * slideW}px)`;
-    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
-  }
+const promptTexts = [
+  `Você é um copywriter especialista em marcas de bem-estar, cosmética natural e espiritualidade. Escreva um post para o Instagram da marca Santo Xêro — uma linha de produtos feita com óleos vegetais naturais trabalhados com frequências vibracionais energéticas. A marca tem estética botânica, ancestral e sagrada.\n\nTom: poético, íntimo, com autoridade espiritual. Evite clichês de "natural" e "orgânico". Use linguagem sensorial e ritualística.\n\nO post deve ter: frase de abertura impactante (máx. 10 palavras) · corpo com 3–4 parágrafos curtos · call to action suave · 10 hashtags relevantes.\n\nTema do post: [DESCREVA O PRODUTO OU TEMA]`,
+  `Crie uma legenda para um Reel do Instagram da Santo Xêro. O vídeo mostra [DESCREVA O CONTEÚDO DO VÍDEO].\n\nA legenda deve:\n— Começar com uma pergunta ou afirmação que para o scroll\n— Ter de 4 a 6 linhas de texto\n— Usar no máximo 1 emoji\n— Terminar com CTA suave\n— Incluir 8 hashtags nicho ao final\n\nEstilo: sagrado, botânico, vibracional. Sem tom de venda direta.`,
+  `Crie um calendário de conteúdo para 7 posts no Instagram da Santo Xêro para a próxima semana. Para cada dia, gere: Tema · Formato · Frase de abertura · Legenda curta (máx. 4 linhas) · Melhor horário · 5 hashtags.\n\nAlternar entre: educativo · ritual/prático · filosófico/espiritual · bastidores.\n\nTom: botânico, ancestral, sagrado, vibracional. Nunca soar como propaganda.\n\nProduto em destaque: [NOME DO PRODUTO]`,
+  `Você é o atendimento da Santo Xêro, marca de produtos naturais vibracionais. Responda a mensagem abaixo com tom acolhedor, autêntico e alinhado à marca (espiritual, botânico, amoroso — nunca corporativo).\n\nSe for dúvida sobre produto: responda com clareza e benefícios naturais.\nSe for elogio: agradeça com profundidade.\nSe for reclamação: acolha primeiro, solucione depois.\nSe for curiosidade: eduque sobre óleos vegetais ou frequências vibracionais.\n\nMensagem recebida: [COLE A MENSAGEM AQUI]`,
+  `Crie um carrossel educativo de 5 slides para o Instagram da Santo Xêro sobre o ingrediente: [NOME DO INGREDIENTE].\n\nPara cada slide: título curto (máx. 6 palavras) e texto de até 3 linhas.\nEstrutura:\nSlide 1: Frase de abertura impactante\nSlide 2: Origem ancestral\nSlide 3: Benefícios para o corpo\nSlide 4: Campo vibracional e energia\nSlide 5: Como usar + CTA\n\nTom: poético e informativo. Cite sabedoria popular + informação técnica. Finalize com legenda completa.`,
+  `Escreva 3 versões de bio para o Instagram da Santo Xêro.\n\nSobre a marca: produtos de cuidado pessoal com óleos vegetais naturais e frequências vibracionais. Cuida de corpo, mente e espírito. Botânica ancestral.\n\nRequisitos: máx. 150 caracteres · emoji de planta · diferencial vibracional · CTA.\n\nVersão 1: mais poética\nVersão 2: direta com proposta de valor\nVersão 3: com pergunta reflexiva`
+];
 
-  document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
-  document.getElementById('next').addEventListener('click', () => goTo(current + 1));
-
-  // touch/swipe
-  let startX = 0;
-  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
-  track.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+function copiarPrompt(btn, idx) {
+  navigator.clipboard.writeText(promptTexts[idx]).then(() => {
+    btn.textContent = '✓ copiado';
+    btn.classList.add('ok');
+    showToast();
+    setTimeout(() => { btn.textContent = 'copiar'; btn.classList.remove('ok'); }, 2000);
   });
+}
 
-  // teclado
-  document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight') goTo(current + 1);
-    if (e.key === 'ArrowLeft')  goTo(current - 1);
+/* ── HASHTAGS ── */
+function toggleHash(el) {
+  el.classList.toggle('sel');
+  const grp = el.closest('.hash-grupo');
+  const idx = [...document.querySelectorAll('.hash-grupo')].indexOf(grp);
+  const sel = grp.querySelectorAll('.htag.sel');
+  document.getElementById('cnt' + idx).textContent = sel.length > 0 ? sel.length + ' tag' + (sel.length > 1 ? 's' : '') + ' selecionada' + (sel.length > 1 ? 's' : '') : 'Clique nas tags para selecionar';
+}
+
+function copiarHashtags(idx) {
+  const grp = document.querySelectorAll('.hash-grupo')[idx];
+  const btn = grp.querySelector('.hash-copy-btn');
+  const sels = [...grp.querySelectorAll('.htag.sel')];
+  const all = sels.length > 0 ? sels : [...grp.querySelectorAll('.htag')];
+  const txt = all.map(h => h.textContent.trim()).join(' ');
+  navigator.clipboard.writeText(txt).then(() => {
+    btn.textContent = '✓ copiado';
+    btn.classList.add('ok');
+    showToast();
+    setTimeout(() => { btn.textContent = 'copiar selecionadas'; btn.classList.remove('ok'); }, 2000);
   });
+}
 
-  // redimensionar
-  window.addEventListener('resize', () => goTo(current));
+/* ── TECLADO MODAL ── */
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('modal').classList.contains('open')) return;
+  if (e.key === 'Escape') closeModal({ target: document.getElementById('modal') });
+  if (e.key === 'ArrowRight') navModal(1);
+  if (e.key === 'ArrowLeft') navModal(-1);
+});
 </script>
 </body>
 </html>
